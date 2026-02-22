@@ -1,0 +1,50 @@
+[INFO] Downsampling full 96^3 -> 64^3 (no cropping).
+[INFO] Enabled sources and counts (after per source sampling):
+ - wu: 10
+[INFO] Combined -> 10 files (subset frac=1.0).
+[INFO] Train/val split: 9 / 1.
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:654: Checkpoint directory /home/ads4015/lsm_fm_public_repo/01-pretraining/output exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+
+  | Name                | Type         | Params | Mode
+-------------------------------------------------------------
+0 | reconstruction_head | LightDecoder | 940 K  | train
+1 | student_encoder     | UNet         | 27.2 M | train
+2 | teacher_encoder     | UNet         | 27.2 M | eval
+-------------------------------------------------------------
+28.1 M    Trainable params
+27.2 M    Non-trainable params
+55.3 M    Total params
+221.177   Total estimated model params size (MB)
+151       Modules in train mode
+144       Modules in eval mode
+SLURM auto-requeueing enabled. Setting signal handlers.
+Training: |          | 0/? [00:00<?, ?it/s][DEBUG] RANK: 0, world_size=2   
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=7` in the `DataLoader` to improve performance.
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/utilities/data.py:79: Trying to infer the `batch_size` from an ambiguous collection. The batch size we found is 1. To avoid any miscalculations, use `self.log(..., batch_size=batch_size)`.
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=7` in the `DataLoader` to improve performance.
+Epoch 19: 100%|██████████| 5/5 [00:05<00:00,  0.97it/s, v_num=fby7, train_loss_step=0.196, val_loss=0.194, val_logit_scale=1.000, val_loss_report=0.148, train_loss_epoch=0.197, train_logit_scale=1.000]
+[INFO] Best model saved to : /home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt
+Epoch 0, global step 1: 'val_loss_report' reached 14.67420 (best 14.67420), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 1, global step 2: 'val_loss_report' reached 0.53660 (best 0.53660), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 2, global step 3: 'val_loss_report' was not in top 1
+Epoch 3, global step 4: 'val_loss_report' was not in top 1
+Epoch 4, global step 5: 'val_loss_report' reached 0.36910 (best 0.36910), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 5, global step 6: 'val_loss_report' was not in top 1
+Epoch 6, global step 7: 'val_loss_report' reached 0.28286 (best 0.28286), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 7, global step 8: 'val_loss_report' was not in top 1
+Epoch 8, global step 9: 'val_loss_report' reached 0.26788 (best 0.26788), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 9, global step 10: 'val_loss_report' reached 0.23260 (best 0.23260), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 10, global step 11: 'val_loss_report' was not in top 1
+Epoch 11, global step 12: 'val_loss_report' reached 0.21217 (best 0.21217), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 12, global step 13: 'val_loss_report' reached 0.19937 (best 0.19937), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 13, global step 14: 'val_loss_report' reached 0.18636 (best 0.18636), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 14, global step 15: 'val_loss_report' reached 0.16409 (best 0.16409), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 15, global step 16: 'val_loss_report' reached 0.15985 (best 0.15985), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 16, global step 17: 'val_loss_report' reached 0.15500 (best 0.15500), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 17, global step 18: 'val_loss_report' was not in top 1
+Epoch 18, global step 19: 'val_loss_report' reached 0.14315 (best 0.14315), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v2.ckpt' as top 1
+Epoch 19, global step 20: 'val_loss_report' was not in top 1
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[INFO] Best val loss: 0.14314979314804077
+[INFO] Total runtime: 0:02:17.305907

@@ -1,0 +1,1 @@
+{"columns": ["best_train_loss", "best_val_loss", "best_train_clip_loss", "best_val_clip_loss", "best_train_ibot_loss", "best_val_ibot_loss"], "data": [[0.20139048993587494, 0.15418310463428497, 0.0, 0.0, 0.20139048993587494, 0.15418310463428497]]}

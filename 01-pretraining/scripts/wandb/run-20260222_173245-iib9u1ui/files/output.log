@@ -1,0 +1,58 @@
+[INFO] Downsampling full 96^3 -> 64^3 (no cropping).
+[INFO] Enabled sources and counts (after per source sampling):
+ - wu: 10
+[INFO] Combined -> 10 files (subset frac=1.0).
+[INFO] Train/val split: 9 / 1.
+Loading prompt mappings from ../sample_patches/text_prompts_wu.json...
+Loading prompt mappings from ../sample_patches/text_prompts_wu.json...
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:654: Checkpoint directory /home/ads4015/lsm_fm_public_repo/01-pretraining/output exists and is not empty.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+
+  | Name                | Type         | Params | Mode
+-------------------------------------------------------------
+0 | reconstruction_head | LightDecoder | 940 K  | train
+1 | student_encoder     | UNet         | 27.2 M | train
+2 | teacher_encoder     | UNet         | 27.2 M | eval
+3 | text_encoder        | BertModel    | 109 M  | eval
+4 | text_proj           | Sequential   | 657 K  | train
+5 | image_proj          | Sequential   | 526 K  | train
+  | other params        | n/a          | 1      | n/a
+-------------------------------------------------------------
+29.3 M    Trainable params
+136 M     Non-trainable params
+165 M     Total params
+663.841   Total estimated model params size (MB)
+163       Modules in train mode
+372       Modules in eval mode
+SLURM auto-requeueing enabled. Setting signal handlers.
+Training: |          | 0/? [00:00<?, ?it/s][DEBUG] RANK: 0, world_size=2   
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=7` in the `DataLoader` to improve performance.
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/torch/nn/modules/module.py:1750: FutureWarning: `encoder_attention_mask` is deprecated and will be removed in version 4.55.0 for `BertSdpaSelfAttention.forward`.
+  return forward_call(*args, **kwargs)
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/utilities/data.py:79: Trying to infer the `batch_size` from an ambiguous collection. The batch size we found is 1. To avoid any miscalculations, use `self.log(..., batch_size=batch_size)`.
+/midtier/paetzollab/scratch/ads4015/conda/envs/monai-env2/lib/python3.9/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:425: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=7` in the `DataLoader` to improve performance.
+Epoch 19: 100%|██████████| 5/5 [00:07<00:00,  0.66it/s, v_num=u1ui, train_loss_step=0.207, val_loss=0.154, val_logit_scale=10.00, val_loss_report=0.125, train_loss_epoch=0.192, train_logit_scale=10.00]
+[INFO] Best model saved to : /home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt
+Epoch 0, global step 1: 'val_loss_report' reached 13.75419 (best 13.75419), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 1, global step 2: 'val_loss_report' reached 0.74583 (best 0.74583), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 2, global step 3: 'val_loss_report' was not in top 1
+Epoch 3, global step 4: 'val_loss_report' was not in top 1
+Epoch 4, global step 5: 'val_loss_report' reached 0.31708 (best 0.31708), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 5, global step 6: 'val_loss_report' reached 0.31113 (best 0.31113), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 6, global step 7: 'val_loss_report' reached 0.22565 (best 0.22565), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 7, global step 8: 'val_loss_report' was not in top 1
+Epoch 8, global step 9: 'val_loss_report' was not in top 1
+Epoch 9, global step 10: 'val_loss_report' reached 0.21353 (best 0.21353), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 10, global step 11: 'val_loss_report' was not in top 1
+Epoch 11, global step 12: 'val_loss_report' reached 0.18917 (best 0.18917), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 12, global step 13: 'val_loss_report' was not in top 1
+Epoch 13, global step 14: 'val_loss_report' reached 0.15545 (best 0.15545), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 14, global step 15: 'val_loss_report' was not in top 1
+Epoch 15, global step 16: 'val_loss_report' was not in top 1
+Epoch 16, global step 17: 'val_loss_report' was not in top 1
+Epoch 17, global step 18: 'val_loss_report' reached 0.15014 (best 0.15014), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 18, global step 19: 'val_loss_report' reached 0.13774 (best 0.13774), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+Epoch 19, global step 20: 'val_loss_report' reached 0.12473 (best 0.12473), saving model to '/home/ads4015/lsm_fm_public_repo/01-pretraining/output/pretrained_unet_best-v1.ckpt' as top 1
+`Trainer.fit` stopped: `max_epochs=20` reached.
+[INFO] Best val loss: 0.12473085522651672
+[INFO] Total runtime: 0:02:22.243509

@@ -1,0 +1,15 @@
+{"time":"2026-02-22T17:32:45.17961341-05:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"wandb/run-20260222_173245-iib9u1ui/logs/debug-core.log"}
+{"time":"2026-02-22T17:32:45.355548494-05:00","level":"INFO","msg":"created new stream","id":"iib9u1ui"}
+{"time":"2026-02-22T17:32:45.355566971-05:00","level":"INFO","msg":"stream: started","id":"iib9u1ui"}
+{"time":"2026-02-22T17:32:45.355579548-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"iib9u1ui"}
+{"time":"2026-02-22T17:32:45.355585257-05:00","level":"INFO","msg":"sender: started","stream_id":"iib9u1ui"}
+{"time":"2026-02-22T17:32:45.355606158-05:00","level":"INFO","msg":"handler: started","stream_id":"iib9u1ui"}
+{"time":"2026-02-22T17:32:45.805990956-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2026-02-22T17:34:54.100649031-05:00","level":"INFO","msg":"stream: closing","id":"iib9u1ui"}
+{"time":"2026-02-22T17:34:54.100674704-05:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2026-02-22T17:34:54.100710836-05:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2026-02-22T17:34:54.521873634-05:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2026-02-22T17:34:54.817865297-05:00","level":"INFO","msg":"handler: closed","stream_id":"iib9u1ui"}
+{"time":"2026-02-22T17:34:54.817884646-05:00","level":"INFO","msg":"writer: Close: closed","stream_id":"iib9u1ui"}
+{"time":"2026-02-22T17:34:54.817915887-05:00","level":"INFO","msg":"sender: closed","stream_id":"iib9u1ui"}
+{"time":"2026-02-22T17:34:54.820522196-05:00","level":"INFO","msg":"stream: closed","id":"iib9u1ui"}

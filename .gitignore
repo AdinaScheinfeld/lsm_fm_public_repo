@@ -1,0 +1,9 @@
+output/
+*.ckpt
+*.pt
+
+__pycache__/
+*.pyc
+.netrc
+
+pretrained_models/

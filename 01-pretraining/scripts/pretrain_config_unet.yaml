@@ -1,0 +1,129 @@
+# pretrain_config_unet.yaml - Config file for pretraining with image+text or image-only using a UNet backbone
+
+training:
+  seed: 100
+  project_name: pretrain-lsm-unet
+  max_epochs: 500
+  patience: 200 # use early stopping with patience (set to a high value to effectively disable)
+  log_every_n_steps: 5
+  checkpoint_every_n_epochs: 50 # save checkpoint every n epochs
+
+# config for distributed training
+dist:
+  multi_gpu: True # set to True for multi-gpu training
+  accelerator: gpu # cpu/gpu/mps
+  strategy: ddp # distributed data parallel (ddp) for multi-gpu training 
+  # (one process per gpu where each process has its own copy of the model and optimiser; 
+  # training data is split across processes and sees a unique mini-batch each step; 
+  # after each forward/backward pass, gradients are averaged acrosss all gpus so models stay in sync)
+  devices: 2 # number of gpus per node (set to 1 for single gpu training)
+  num_nodes: 1 # set >1 for multi-node training
+  precision: bf16-mixed # bf16-mixed good for h100 gpus (some parts of computation use bfloat16 for speed and memory efficiency, while others use float32 for stability)
+  accumulate_grad_batches: 8 # gradient accumulation (controls how many batches to accumulate gradients over before performing an optimizer step; set to >1 for larger effective batch size)
+  sync_batchnorm: True # synchronize batch norm across gpus (good for multi-gpu training)
+  deterministic: False # set to True for reproducibility (may slow down training)
+  
+data:
+
+  # paths to all datasets
+  roots:
+    connection: ../sample_patches/allen_connection_projection_patches
+    dev_mouse: ../sample_patches/allen_developing_mouse_patches
+    human2: ../sample_patches/allen_human2_patches
+    selma: ../sample_patches/selma_patches_96
+    wu: ../sample_patches/wu_brain_patches
+
+  # select which datasets to use for training (set to False to exclude)
+  enable:
+    connection: False
+    dev_mouse: False
+    human2: False
+    selma: False
+    wu: True
+
+  prompt_jsons:
+    - ../sample_patches/text_prompts_allen_connection.json
+    - ../sample_patches/text_prompts_allen_dev_mouse.json
+    - ../sample_patches/text_prompts_allen_human2.json
+    - ../sample_patches/text_prompts_selma.json
+    - ../sample_patches/text_prompts_wu.json
+
+  # batching
+  global_batch_size: 16 # total batch size across all gpus (ex: use 32 for 4 gpus with batch_size=8)
+  batch_size: 16 # number of patches per batch (use max 8 for 96x96x96 patches on 96GB GPU h100 GPUs) ***
+
+  # split and sampling
+  train_frac: 0.9 # fraction of volumes to use for training (remaining used for val)
+  data_subset_frac: 1.0 #0.5 # percent of files to use per volume (set to 1.0 to use all files) ***
+  per_source_frac: {}
+  per_source_max: {}
+
+  # patch sizing
+  use_sub_patches: False # if True, will divide all each 96x96x96 patch into 2 sub_patches of size 64x64x64 ***
+  base_patch_size: 96 # size of each patch in voxels (use: 96x96x96)
+  sub_patch_size: 64 # size of each sub_patch in voxels (use: 64x64x64) if use_sub_patches is True
+
+  # loader
+  num_workers: 1 # number of workers for data loading
+
+  # downsampling
+  downsample:
+    enabled: True
+    target_size: 64 # resample 96^3 -> 64^3 (lower resolution)
+
+
+model:
+  use_text: True # if False, will run with image-only (no BERT, no CLIP loss, no align loss, no text embedding logging)
+  mask_ratio_warmup: 0.05 # fraction of masked patches per volume for first few epochs
+  warmup_epochs: 20
+  mask_ratio: 0.3 # fraction of masked patches per volume
+  lr: 0.0001
+  ema_decay: 0.996
+  mask_patch_size: 8 # base patch size for masking
+  temp_student: 0.1 # temperature for student logits
+  temp_teacher: 0.1 # temperature for teacher softmax
+  text_model_name: ../setup/pretrained_models/bert-base-uncased # text model to use (bert-base-uncased from HuggingFace)
+  embed_dim: 128 # dimension of image and text embeddings (must be the same for CLIP loss)
+  clip_temperature: 0.1 # temperature for CLIP loss
+  save_filename: pretrained_unet
+  save_dirpath: ../output # directory to save model checkpoints and logs
+  max_log_images: 5
+
+  # UNet specific parameters
+  unet:
+    channels: [32, 64, 128, 256, 512] # number of channels
+    strides: [2, 2, 2, 1] # strides for each downsampling layer
+    num_res_units: 2 # number of residual units per level
+    norm: BATCH # normalization type (BATCH, INSTANCE, LAYER)
+
+loss_weights:
+  distill_weight: 0.29 # masked voxel KL divergence
+  reconstruction_weight: 0.20 # masked voxel L1 reconstructions
+  align_weight: 0.06 # image-text cosine similarity per pair
+  clip_weight: 0.36 # global contrastive loss between all image and text embeddings in batch
+
+# fixed weights for validation loss reporting (to compare across hyperparams)
+report_weights:
+  clip: 0.30
+  align: 0.10
+  recon: 0.30
+  distill: 0.30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,2306 @@
+_wandb:
+    value:
+        cli_version: 0.19.11
+        m:
+            - "1": Val Samples (epoch 8).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": trainer/global_step
+              "6":
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_loss_report
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_clip_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": checkpoint_best_val_loss
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 8)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_distill_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_clip_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": job_runtime_seconds
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_clip_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_ibot_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_align_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_distill_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_ibot_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table.nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_distill_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_recon_loss_l1_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_align_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 14).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 8).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": checkpoint_best_model_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table.size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 8)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_recon_loss_l1_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table.sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 17).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table.path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": job_runtime
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_ibot_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": job_start_time
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 8).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 13).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 8).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table.artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_recon_loss_l1_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 4).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table.ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_clip_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 12).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 11).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_align_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_recon_loss_l1_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_distill_loss_step
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_logit_scale
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 2).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 8).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 8).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 16).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 18)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 7).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 19).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 19)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_ibot_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": val_loss
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_logit_scale
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 6)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 2)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 4)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 9).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": train_align_loss_epoch
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 5).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 11)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 3).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 9).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 13).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 17).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 8).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 15)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": best_metrics_table._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": job_end_time
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 1).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 3).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10).nrows
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 12).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 18).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 0).size
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 6).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 10).ncols
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 14)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 15).sha256
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 0)._latest_artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 1).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 5).path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Val Samples (epoch 7)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 10)._type
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+            - "1": Train Samples (epoch 16).artifact_path
+              "5": 2
+              "6":
+                - 1
+                - 3
+              "7": []
+        python_version: 3.9.21
+        t:
+            "1":
+                - 1
+                - 5
+                - 9
+                - 10
+                - 11
+                - 41
+                - 48
+                - 49
+                - 53
+                - 55
+                - 103
+            "2":
+                - 1
+                - 5
+                - 9
+                - 10
+                - 11
+                - 41
+                - 48
+                - 49
+                - 53
+                - 55
+                - 103
+            "3":
+                - 7
+                - 23
+                - 55
+                - 62
+                - 66
+            "4": 3.9.21
+            "5": 0.19.11
+            "6": 4.54.1
+            "8":
+                - 5
+            "12": 0.19.11
+            "13": linux-x86_64
+data:
+    value:
+        base_patch_size: 96
+        batch_size: 16
+        data_subset_frac: 1
+        downsample:
+            enabled: true
+            target_size: 64
+        enable:
+            connection: false
+            dev_mouse: false
+            human2: false
+            selma: false
+            wu: true
+        global_batch_size: 16
+        num_workers: 1
+        prompt_jsons:
+            - ../sample_patches/text_prompts_allen_connection.json
+            - ../sample_patches/text_prompts_allen_dev_mouse.json
+            - ../sample_patches/text_prompts_allen_human2.json
+            - ../sample_patches/text_prompts_selma.json
+            - ../sample_patches/text_prompts_wu.json
+        roots:
+            connection: ../sample_patches/allen_connection_projection_patches
+            dev_mouse: ../sample_patches/allen_developing_mouse_patches
+            human2: ../sample_patches/allen_human2_patches
+            selma: ../sample_patches/selma_patches_96
+            wu: ../sample_patches/wu_brain_patches
+        sub_patch_size: 64
+        train_frac: 0.9
+        use_sub_patches: false
+dist:
+    value:
+        accelerator: gpu
+        accumulate_grad_batches: 8
+        deterministic: false
+        devices: 2
+        multi_gpu: true
+        num_nodes: 1
+        precision: bf16-mixed
+        strategy: ddp
+        sync_batchnorm: true
+loss_weights:
+    value:
+        align_weight: 0.05
+        clip_weight: 0.3
+        distill_weight: 0.5
+        reconstruction_weight: 0.3
+model:
+    value:
+        clip_temperature: 0.1
+        ema_decay: 0.994
+        embed_dim: 512
+        lr: 0.001
+        mask_patch_size: 8
+        mask_ratio: 0.3
+        mask_ratio_warmup: 0.05
+        max_log_images: 5
+        save_dirpath: ../output
+        save_filename: pretrained_unet
+        temp_student: 0.025
+        temp_teacher: 0.1
+        text_model_name: bert-base-uncased
+        unet:
+            channels:
+                - 32
+                - 64
+                - 128
+                - 256
+                - 512
+            norm: INSTANCE
+            num_res_units: 2
+            strides:
+                - 2
+                - 2
+                - 2
+                - 2
+        use_text: false
+        warmup_epochs: 10
+report_weights:
+    value:
+        align: 0.1
+        clip: 0.3
+        distill: 0.3
+        recon: 0.3
+training:
+    value:
+        checkpoint_every_n_epochs: 50
+        log_every_n_steps: 5
+        max_epochs: 20
+        patience: 5
+        project_name: pretrain-lsm-unet
+        seed: 100

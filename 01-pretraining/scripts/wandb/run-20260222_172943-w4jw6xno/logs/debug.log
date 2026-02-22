@@ -1,0 +1,24 @@
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_setup.py:_flush():70] Current SDK version is 0.19.11
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_setup.py:_flush():70] Configure stats pid to 3891572
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_setup.py:_flush():70] Loading settings from /home/ads4015/.config/wandb/settings
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_setup.py:_flush():70] Loading settings from /home/ads4015/lsm_fm_public_repo/01-pretraining/scripts/wandb/settings
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_setup.py:_flush():70] Loading settings from environment variables
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_init.py:setup_run_log_directory():724] Logging user logs to ./wandb/run-20260222_172943-w4jw6xno/logs/debug.log
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_init.py:setup_run_log_directory():725] Logging internal logs to ./wandb/run-20260222_172943-w4jw6xno/logs/debug-internal.log
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_init.py:init():852] calling init triggers
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_init.py:init():857] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_init.py:init():893] starting backend
+2026-02-22 17:29:43,854 INFO    MainThread:3891572 [wandb_init.py:init():897] sending inform_init request
+2026-02-22 17:29:43,902 INFO    MainThread:3891572 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2026-02-22 17:29:43,902 INFO    MainThread:3891572 [wandb_init.py:init():907] backend started and connected
+2026-02-22 17:29:43,908 INFO    MainThread:3891572 [wandb_init.py:init():1005] updated telemetry
+2026-02-22 17:29:43,908 INFO    MainThread:3891572 [wandb_init.py:init():1029] communicating run to backend with 90.0 second timeout
+2026-02-22 17:29:44,461 INFO    MainThread:3891572 [wandb_init.py:init():1104] starting run threads in backend
+2026-02-22 17:29:44,682 INFO    MainThread:3891572 [wandb_run.py:_console_start():2573] atexit reg
+2026-02-22 17:29:44,682 INFO    MainThread:3891572 [wandb_run.py:_redirect():2421] redirect: wrap_raw
+2026-02-22 17:29:44,683 INFO    MainThread:3891572 [wandb_run.py:_redirect():2490] Wrapping output streams.
+2026-02-22 17:29:44,683 INFO    MainThread:3891572 [wandb_run.py:_redirect():2513] Redirects installed.
+2026-02-22 17:29:44,685 INFO    MainThread:3891572 [wandb_init.py:init():1150] run started, returning control to user process
+2026-02-22 17:30:16,872 INFO    MainThread:3891572 [wandb_run.py:_config_callback():1436] config_cb None None {'training': {'seed': 100, 'project_name': 'pretrain-lsm-unet', 'max_epochs': 20, 'patience': 5, 'log_every_n_steps': 5, 'checkpoint_every_n_epochs': 50}, 'dist': {'multi_gpu': True, 'accelerator': 'gpu', 'strategy': 'ddp', 'devices': 2, 'num_nodes': 1, 'precision': 'bf16-mixed', 'accumulate_grad_batches': 8, 'sync_batchnorm': True, 'deterministic': False}, 'data': {'roots': {'connection': '../sample_patches/allen_connection_projection_patches', 'dev_mouse': '../sample_patches/allen_developing_mouse_patches', 'human2': '../sample_patches/allen_human2_patches', 'selma': '../sample_patches/selma_patches_96', 'wu': '../sample_patches/wu_brain_patches'}, 'enable': {'connection': False, 'dev_mouse': False, 'human2': False, 'selma': False, 'wu': True}, 'prompt_jsons': ['../sample_patches/text_prompts_allen_connection.json', '../sample_patches/text_prompts_allen_dev_mouse.json', '../sample_patches/text_prompts_allen_human2.json', '../sample_patches/text_prompts_selma.json', '../sample_patches/text_prompts_wu.json'], 'global_batch_size': 16, 'batch_size': 16, 'train_frac': 0.9, 'data_subset_frac': 1.0, 'per_source_frac': {}, 'per_source_max': {}, 'use_sub_patches': False, 'base_patch_size': 96, 'sub_patch_size': 64, 'num_workers': 1, 'downsample': {'enabled': True, 'target_size': 64}}, 'model': {'use_text': True, 'mask_ratio_warmup': 0.05, 'warmup_epochs': 10, 'mask_ratio': 0.3, 'lr': 0.001, 'ema_decay': 0.994, 'mask_patch_size': 8, 'temp_student': 0.025, 'temp_teacher': 0.1, 'text_model_name': 'bert-base-uncased', 'embed_dim': 512, 'clip_temperature': 0.1, 'save_filename': 'pretrained_unet', 'save_dirpath': '../output', 'max_log_images': 5, 'unet': {'channels': [32, 64, 128, 256, 512], 'strides': [2, 2, 2, 2], 'num_res_units': 2, 'norm': 'INSTANCE'}}, 'loss_weights': {'distill_weight': 0.5, 'reconstruction_weight': 0.3, 'align_weight': 0.05, 'clip_weight': 0.3}, 'report_weights': {'clip': 0.3, 'align': 0.1, 'recon': 0.3, 'distill': 0.3}}
+2026-02-22 17:32:24,180 INFO    MsgRouterThr:3891572 [mailbox.py:close():129] [no run ID] Closing mailbox, abandoning 2 handles.

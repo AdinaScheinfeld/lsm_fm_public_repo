@@ -1,0 +1,139 @@
+_wandb:
+    value:
+        cli_version: 0.19.11
+        m:
+            - "1": trainer/global_step
+              "6":
+                - 3
+              "7": []
+        python_version: 3.9.21
+        t:
+            "1":
+                - 1
+                - 5
+                - 9
+                - 10
+                - 11
+                - 41
+                - 48
+                - 49
+                - 53
+                - 55
+                - 103
+            "2":
+                - 1
+                - 5
+                - 9
+                - 10
+                - 11
+                - 41
+                - 48
+                - 49
+                - 53
+                - 55
+                - 103
+            "3":
+                - 7
+                - 23
+                - 55
+                - 66
+            "4": 3.9.21
+            "5": 0.19.11
+            "6": 4.54.1
+            "8":
+                - 5
+            "12": 0.19.11
+            "13": linux-x86_64
+data:
+    value:
+        base_patch_size: 96
+        batch_size: 16
+        data_subset_frac: 1
+        downsample:
+            enabled: true
+            target_size: 64
+        enable:
+            connection: false
+            dev_mouse: false
+            human2: false
+            selma: false
+            wu: true
+        global_batch_size: 16
+        num_workers: 1
+        prompt_jsons:
+            - ../sample_patches/text_prompts_allen_connection.json
+            - ../sample_patches/text_prompts_allen_dev_mouse.json
+            - ../sample_patches/text_prompts_allen_human2.json
+            - ../sample_patches/text_prompts_selma.json
+            - ../sample_patches/text_prompts_wu.json
+        roots:
+            connection: ../sample_patches/allen_connection_projection_patches
+            dev_mouse: ../sample_patches/allen_developing_mouse_patches
+            human2: ../sample_patches/allen_human2_patches
+            selma: ../sample_patches/selma_patches_96
+            wu: ../sample_patches/wu_brain_patches
+        sub_patch_size: 64
+        train_frac: 0.9
+        use_sub_patches: false
+dist:
+    value:
+        accelerator: gpu
+        accumulate_grad_batches: 8
+        deterministic: false
+        devices: 2
+        multi_gpu: true
+        num_nodes: 1
+        precision: bf16-mixed
+        strategy: ddp
+        sync_batchnorm: true
+loss_weights:
+    value:
+        align_weight: 0.05
+        clip_weight: 0.3
+        distill_weight: 0.5
+        reconstruction_weight: 0.3
+model:
+    value:
+        clip_temperature: 0.1
+        ema_decay: 0.994
+        embed_dim: 512
+        lr: 0.001
+        mask_patch_size: 8
+        mask_ratio: 0.3
+        mask_ratio_warmup: 0.05
+        max_log_images: 5
+        save_dirpath: ../output
+        save_filename: pretrained_unet
+        temp_student: 0.025
+        temp_teacher: 0.1
+        text_model_name: bert-base-uncased
+        unet:
+            channels:
+                - 32
+                - 64
+                - 128
+                - 256
+                - 512
+            norm: INSTANCE
+            num_res_units: 2
+            strides:
+                - 2
+                - 2
+                - 2
+                - 2
+        use_text: false
+        warmup_epochs: 10
+report_weights:
+    value:
+        align: 0.1
+        clip: 0.3
+        distill: 0.3
+        recon: 0.3
+training:
+    value:
+        checkpoint_every_n_epochs: 50
+        log_every_n_steps: 5
+        max_epochs: 20
+        patience: 5
+        project_name: pretrain-lsm-unet
+        seed: 100
