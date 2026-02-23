@@ -7,3 +7,5 @@ __pycache__/
 .netrc
 
 pretrained_models/
+
+wandb/
