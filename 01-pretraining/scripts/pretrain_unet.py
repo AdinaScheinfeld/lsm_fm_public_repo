@@ -1,4 +1,4 @@
-# pretrain_unet.py - Main training script for UNet image-text and image-only pretraining
+# pretrain_unet.py - Main training script for UNet image+text and image-only pretraining
 
 # --- Setup ---
 
