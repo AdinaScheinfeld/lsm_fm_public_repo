@@ -4,6 +4,13 @@ This directory contains code for pretraining a 3D UNet-based foundation model on
 
 ---
 
+## Contents
+
+- [sample_patches](sample_patches/) - Subfolder for sample NIfTI image files and JSON text prompts.
+- [scripts](scripts/) - Code for pretraining LSM foundation model. 
+
+---
+
 ## Quick Start
 
 ### Requirements
