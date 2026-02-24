@@ -4,7 +4,7 @@ Sample patches used for pretraining LSM foundation model.
 
 ## Example Images and Text Descriptions
 
-<img src="../../media/lsm_fm-images_viz_pretr.drawio.png" width="30%">
+<img src="../../media/lsm_fm-images_viz_pretr.drawio.png" width="50%">
 
 ## Contents
 
