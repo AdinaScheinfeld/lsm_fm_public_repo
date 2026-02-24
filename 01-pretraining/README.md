@@ -78,7 +78,7 @@ Or run `wandb login` interactively before submitting the job.
 
 Submit the job:
 ```bash
-cd 01-pretraining
+cd 01-pretraining/scripts
 sbatch pretrain_unet.sh
 ```
 
