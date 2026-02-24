@@ -54,7 +54,7 @@ export HF_HUB_DOWNLOAD_TIMEOUT=120
 mkdir -p ../output/logs
 
 # set path to config file
-CONFIG_PATH="pretrain_config_unet.yaml"
+CONFIG_PATH="pretrain_unet_config.yaml"
 
 # clock job start time
 export START_EPOCH="$(date +%s)"
