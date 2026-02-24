@@ -4,7 +4,7 @@ Sample patches and labels used for finetuning LSM foundation model.
 
 ## Example Image-Label Pairs
 
-<img src="../../media/lsm_fm-images_viz_finetu.drawio.png" width="30%">
+<img src="../../media/lsm_fm-images_viz_finetu.drawio.png" width="50%">
 
 ## Contents
 
