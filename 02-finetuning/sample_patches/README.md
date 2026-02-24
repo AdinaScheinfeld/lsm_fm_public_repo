@@ -2,6 +2,10 @@
 
 Sample patches and labels used for finetuning LSM foundation model.
 
+## Example Image-Label Pairs
+
+![Image-label pairs](../../media/lsm_fm-images_viz_finetu.drawio.png)
+
 ## Contents
 
 ### Folders
