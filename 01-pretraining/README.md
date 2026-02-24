@@ -45,7 +45,7 @@ This saves `bert-base-uncased` to `setup/pretrained_models/bert-base-uncased/`. 
 
 ### Step 4 - Configure Training
 
-Edit `01-pretraining/configs/pretrain_config_unet.yaml` to match your setup. The key fields to update are:
+Edit `01-pretraining/scripts/pretrain_config_unet.yaml` to match your setup. The key fields to update are:
 
 **Training mode** — set `use_text: true` for image+text pretraining, `false` for image-only:
 ```yaml
@@ -55,7 +55,7 @@ model:
 
 ### Step 5 - Configure the Job Script
 
-Edit `01-pretraining/job_scripts/pretrain_unet.sh` and update the following:
+Edit `01-pretraining/scripts/pretrain_unet_job.sh` and update the following:
 
 **SLURM resource requests** — update to match your cluster:
 ```bash
@@ -78,7 +78,7 @@ Or run `wandb login` interactively before submitting the job.
 
 Submit the job:
 ```bash
-cd 01-pretraining/job_scripts
+cd 01-pretraining
 sbatch pretrain_unet.sh
 ```
 
@@ -101,7 +101,7 @@ You can add additional NIfTI patch files (`.nii.gz`) according to the structure 
 | Wu Brain | `<root>/<volume>/input/*.nii.gz` | `text_prompts_wu.json` |
 
 
-**Enable/disable sources** — When adding additional datasets, be sure to set each source to `True` or `False` accordingly in `01-pretraining/configs/pretrain_config_unet.yaml`:
+**Enable/disable sources** — When adding additional datasets, be sure to set each source to `True` or `False` accordingly in `01-pretraining/scripts/pretrain_config_unet.yaml`:
 ```yaml
   enable:
     connection: False
@@ -114,7 +114,7 @@ You can add additional NIfTI patch files (`.nii.gz`) according to the structure 
 
 ### Additional Configuration Options
 
-The following parameters can be edited in `01-pretraining/configs/pretrain_config_unet.yaml`:
+The following parameters can be edited in `01-pretraining/scripts/pretrain_config_unet.yaml`:
 
 | Parameter | Location | Description |
 |-----------|----------|-------------|
