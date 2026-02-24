@@ -1,0 +1,110 @@
+# finetune_segmentation_unet_config.yaml - Config for finetuning on a provided folder of image-label pairs
+
+# -------------------------
+# Paths
+# -------------------------
+
+# directory containing training image-label pairs (required)
+# images: <name>.nii.gz, labels: <name>_label.nii.gz
+train_dir: ../sample_patches/train/ # <-- should point to your training data directory
+
+# directory containing validation image-label pairs (optional)
+# if not provided, val_percent of train_dir will be used for validation
+val_dir: ../sample_patches/val/ # <-- should point to your validation data directory
+
+# directory containing held-out test image-label pairs for inference after training (optional)
+# if not provided, inference is skipped
+test_dir: ../sample_patches/test/ # <-- should point to your test data directory
+
+# root directory for all outputs (checkpoints, predictions, logs)
+out_root: ../output/ # <-- should point to your desired output directory
+
+# path to pretrained UNet checkpoint from pretraining (set to null to train from scratch)
+pretrained_ckpt: ../../01-pretraining/output/pretrained_unet_best.ckpt # <-- should point to your pretrained UNet checkpoint
+
+# -------------------------
+# Data
+# -------------------------
+
+# channel substring filter for file discovery (e.g. "ch0", "ch1", or "ALL" for no filtering)
+channel_substr: ALL
+
+# optional prefix filter to select only files starting with a given string
+# e.g. "amyloid_plaque_patch" to train only on amyloid plaque patches
+# set to null to use all files in the directory
+file_prefix: null
+
+# fraction of train_dir to use for validation when val_dir is not provided
+val_percent: 0.2
+
+# minimum number of training and validation pairs required (script will error if not met)
+min_train: 1
+min_val: 1
+
+# -------------------------
+# Training
+# -------------------------
+
+# "pretrained" to load from pretrained_ckpt, "scratch" to train from random initialization
+init: pretrained
+
+# random seed for reproducibility
+seed: 100
+
+# batch size (reduce if running out of GPU memory)
+batch_size: 2
+
+# number of dataloader workers
+num_workers: 4
+
+# learning rate for the decoder head
+lr: 0.0003
+
+# weight decay for AdamW optimizer
+weight_decay: 0.00001
+
+# maximum number of training epochs
+max_epochs: 600
+
+# early stopping patience (number of epochs with no val_loss improvement before stopping)
+early_stopping_patience: 200
+
+# number of epochs to freeze the encoder before finetuning it
+# set to 0 to finetune the full network from epoch 0
+freeze_encoder_epochs: 10
+
+# learning rate multiplier for the encoder (encoder lr = lr * encoder_lr_mult)
+# use a small value (e.g. 0.1-0.2) to finetune the encoder more slowly than the head
+encoder_lr_mult: 0.2
+
+# freeze batch norm running stats during training (1=yes, 0=no)
+# recommended: 1 when using a pretrained checkpoint to preserve pretrained BN statistics
+freeze_bn_stats: 1
+
+# loss function: "dicefocal" or "dicece"
+loss_name: dicefocal
+
+# which checkpoint to use for inference: "best" (lowest val_loss) or "last"
+infer_ckpt: best
+
+# -------------------------
+# UNet Architecture
+# -------------------------
+# must match the architecture used during pretraining
+
+unet_channels: "32,64,128,256,512"
+unet_strides: "2,2,2,1"
+unet_num_res_units: 2
+unet_norm: BATCH
+
+# -------------------------
+# Logging
+# -------------------------
+
+# wandb project name (set to null to disable wandb logging)
+wandb_project: lsm_finetune_segmentation
+
+# optional wandb run name (set to null to use wandb auto-generated name)
+run_name: null
+
+
