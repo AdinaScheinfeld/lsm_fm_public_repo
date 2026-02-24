@@ -79,7 +79,7 @@ Or run `wandb login` interactively before submitting the job.
 Submit the job:
 ```bash
 cd 01-pretraining/scripts
-sbatch pretrain_unet.sh
+sbatch pretrain_unet_job.sh
 ```
 
 This will pretrain a UNet backbone using the sample patches and text descriptions provided in `01-pretraining/sample_patches/`. Checkpoints and logs will be written to `01-pretraining/output/`. Training progress, losses, and reconstructed image samples are logged to WandB.
