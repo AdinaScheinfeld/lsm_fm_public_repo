@@ -15,3 +15,7 @@ Model weights are available on Zenodo [here](10.5281/zenodo.18749465).
 - See [01-pretraining](01-pretraining/) for information on pretraining a light sheet microscopy foundation model.
 
 - See [02-finetuning](02-finetuning/) for information on finetuning a light sheet microscopy foundation model. 
+
+## Model Checkpoints
+
+Pretrained model checkpoints are available to download from Google Drive: https://drive.google.com/drive/folders/1-cXnWTcOkkug4ugBsgrTmUXWEJjD6f9E?usp=sharing
