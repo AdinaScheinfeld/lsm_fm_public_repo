@@ -39,7 +39,7 @@ This installs all required Python packages including PyTorch, MONAI, PyTorch Lig
 
 ### Step 3 - Download Pretrained Checkpoint
 
-Download either the image+text pretrained model or the image-only pretrained model from [here](here).
+Download either the image+text pretrained model or the image-only pretrained model from [here](https://drive.google.com/drive/folders/1-cXnWTcOkkug4ugBsgrTmUXWEJjD6f9E?usp=sharing).
 
 ### Step 4 - Configure Training
 
