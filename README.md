@@ -8,7 +8,7 @@ Light sheet fluorescence microscopy (LSFM) enables high-resolution, three-dimens
 
 <!-- Complete text is available [here](here). -->
 
-Pretrained model checkpoints are available to download from Google Drive: https://drive.google.com/drive/folders/1-cXnWTcOkkug4ugBsgrTmUXWEJjD6f9E?usp=sharing
+Pretrained model checkpoints are available to download from Google Drive: [https://drive.google.com/drive/folders/1-cXnWTcOkkug4ugBsgrTmUXWEJjD6f9E?usp=sharing](https://drive.google.com/drive/folders/1-cXnWTcOkkug4ugBsgrTmUXWEJjD6f9E?usp=sharing)
 
 ## Contents
 
