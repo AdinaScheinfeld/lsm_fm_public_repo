@@ -3,7 +3,7 @@
 #SBATCH --output=../output/logs/pretrain_unet_%j.out
 #SBATCH --error=../output/logs/pretrain_unet_%j.err
 #SBATCH --time=3-00:00:00
-#SBATCH --partition=gpu <-- update to your cluster's GPU partition name if different
+#SBATCH --partition=gpu # <-- update to your cluster's GPU partition name if different
 #SBATCH --gres=gpu:2 # select number of gpus ***
 #SBATCH --mem=180G
 #SBATCH --cpus-per-task=16
