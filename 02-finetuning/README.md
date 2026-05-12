@@ -41,7 +41,7 @@ This installs all required Python packages including PyTorch, MONAI, PyTorch Lig
 
 ### Step 3 - Download Pretrained Checkpoint
 
-Download either the image+text pretrained model or the image-only pretrained model from [here](https://drive.google.com/drive/folders/1-cXnWTcOkkug4ugBsgrTmUXWEJjD6f9E?usp=sharing). Both UNet and SwinUNETR checkpoints are available.
+Pretrained UNet and SwinUNETR checkpoints (both image+text and image-only) are available at [https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516). Download the checkpoint for your chosen backbone and training mode and note the path — you will point the config file to it in Step 4.
 
 ### Step 4 - Configure Training
 
@@ -59,3 +59,4 @@ Choose your task and backbone, then follow the relevant README:
 - All patches should be the same spatial size (default: 96×96×96 voxels)
 - The model is robust to different intensity ranges — intensity is normalized to [0, 1] during loading
 - Architecture parameters (`unet_strides`, `unet_norm`, `swinunetr_feature_size`, etc.) must match between pretraining and finetuning configs — mismatches will result in weights failing to load
+

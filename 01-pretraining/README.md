@@ -20,6 +20,10 @@ This directory contains code for pretraining 3D foundation models on light sheet
 - Conda
 
 
+### Pretrained Weights Available
+
+If you do not want to run pretraining yourself, pretrained UNet and SwinUNETR checkpoints (both image+text and image-only) are available for download at [https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516). To use them, skip directly to `02-finetuning/` and follow the finetuning README.
+
 ### Step 1 - Clone the Repo
 
 Clone this repo so you have your own working copy.
@@ -218,3 +222,4 @@ The same `--resume` and `--ckpt_path` flags are available for the SwinUNETR scri
 - With `use_text: false`, BERT is never loaded and CLIP/alignment losses are zero — the model trains purely on masked image reconstruction and teacher distillation
 - Prompt JSON files for disabled sources do not need to exist — missing files are skipped automatically
 - `unet_strides` in the UNet config must match between pretraining and finetuning configs — if you change the default strides during pretraining, use the same values when finetuning
+
