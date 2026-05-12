@@ -1,0 +1,108 @@
+# finetune_deblurring_unet_config.yaml - Config for finetuning UNet for image deblurring
+
+# -------------------------
+# Paths
+# -------------------------
+
+# directory containing sharp patches and their blurred counterparts (required)
+# each sharp file <name>.nii.gz must have a corresponding <name>_blurred.nii.gz in the same directory
+train_dir: ../../sample_patches/train/ # <-- should point to your training data directory
+
+# optional separate validation and test directories (same format as train_dir)
+# if not provided, train_dir will be auto-split using train_percent and val_percent below
+val_dir: ../../sample_patches/val/   # <-- should point to your validation data directory
+test_dir: ../../sample_patches/test/ # <-- should point to your test data directory
+
+# root directory for all outputs (checkpoints, predictions, logs)
+out_root: ../../output/ # <-- should point to your desired output directory
+
+# path to pretrained UNet checkpoint from pretraining (set init to "scratch" to train from scratch)
+pretrained_ckpt: ../../../01-pretraining/output/pretrained_unet_best.ckpt # <-- should point to your pretrained UNet checkpoint
+
+# -------------------------
+# Data
+# -------------------------
+
+# channel substring filter for file discovery (e.g. "ch0", "ch1", or "ALL" for no filtering)
+channel_substr: ALL
+
+# train/val/test split percentages (only used when val_dir and test_dir are not provided)
+train_percent: 0.70
+val_percent: 0.15
+# test uses the remaining samples (1 - train_percent - val_percent)
+
+# minimum number of pairs required in each split (script will error if not met)
+min_train: 1
+min_val: 1
+min_test: 1
+
+# -------------------------
+# Training
+# -------------------------
+
+# "pretrained" to load from pretrained_ckpt, "scratch" to train from random initialization
+init: pretrained
+
+# random seed for reproducibility
+seed: 100
+
+# batch size (reduce if running out of GPU memory)
+batch_size: 2
+
+# number of dataloader workers
+num_workers: 4
+
+# learning rate for the decoder head
+lr: 0.0001
+
+# learning rate multiplier for the encoder (encoder lr = lr * encoder_lr_mult)
+# use a small value (e.g. 0.1) to finetune the encoder more slowly than the decoder
+encoder_lr_mult: 0.1
+
+# weight decay for AdamW optimizer
+weight_decay: 0.00001
+
+# maximum number of training epochs
+max_epochs: 500
+
+# early stopping patience (number of epochs with no val_total_loss improvement before stopping)
+early_stopping_patience: 50
+
+# number of epochs to freeze the encoder before finetuning it
+# set to 0 to finetune the full network from epoch 0
+freeze_encoder_epochs: 0
+
+# freeze batch norm running stats during training (true/false)
+# recommended: true when using a pretrained checkpoint to preserve pretrained BN statistics
+freeze_bn_stats: false
+
+# -------------------------
+# Loss Weights
+# -------------------------
+
+# weight for 3D gradient edge loss (encourages matching sharp edges)
+edge_weight: 0.1
+
+# weight for high-frequency detail loss (encourages matching fine structure)
+highfreq_weight: 0.1
+
+# -------------------------
+# UNet Architecture
+# -------------------------
+# must match the architecture used during pretraining
+
+unet_channels: "32,64,128,256,512"
+unet_strides: "2,2,2,1"
+unet_num_res_units: 2
+unet_norm: BATCH
+
+# -------------------------
+# Logging
+# -------------------------
+
+# wandb project name (set to null to disable wandb logging)
+wandb_project: lsm_finetune_deblurring
+
+# optional wandb run name (set to null to use wandb auto-generated name)
+run_name: null
+
