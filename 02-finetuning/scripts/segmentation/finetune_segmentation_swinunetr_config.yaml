@@ -1,4 +1,4 @@
-# finetune_segmentation_unet_config.yaml - Config for finetuning on a provided folder of image-label pairs
+# finetune_segmentation_swinunetr_config.yaml - Config for finetuning SwinUNETR on a provided folder of image-label pairs
 
 # -------------------------
 # Paths
@@ -6,21 +6,21 @@
 
 # directory containing training image-label pairs (required)
 # images: <name>.nii.gz, labels: <name>_label.nii.gz
-train_dir: ../sample_patches/train/ # <-- should point to your training data directory
+train_dir: ../../sample_patches/train/ # <-- should point to your training data directory
 
 # directory containing validation image-label pairs (optional)
 # if not provided, val_percent of train_dir will be used for validation
-val_dir: ../sample_patches/val/ # <-- should point to your validation data directory
+val_dir: ../../sample_patches/val/ # <-- should point to your validation data directory
 
 # directory containing held-out test image-label pairs for inference after training (optional)
 # if not provided, inference is skipped
-test_dir: ../sample_patches/test/ # <-- should point to your test data directory
+test_dir: ../../sample_patches/test/ # <-- should point to your test data directory
 
 # root directory for all outputs (checkpoints, predictions, logs)
-out_root: ../output/ # <-- should point to your desired output directory
+out_root: ../../output/ # <-- should point to your desired output directory
 
-# path to pretrained UNet checkpoint from pretraining (set to null to train from scratch)
-pretrained_ckpt: ../../01-pretraining/output/pretrained_unet_best.ckpt # <-- should point to your pretrained UNet checkpoint
+# path to pretrained SwinUNETR checkpoint from pretraining (set to null to train from scratch)
+pretrained_ckpt: ../../../01-pretraining/output/pretrained_swinunetr_best.ckpt # <-- should point to your pretrained SwinUNETR checkpoint
 
 # -------------------------
 # Data
@@ -88,14 +88,15 @@ loss_name: dicefocal
 infer_ckpt: best
 
 # -------------------------
-# UNet Architecture
+# SwinUNETR Architecture
 # -------------------------
 # must match the architecture used during pretraining
 
-unet_channels: "32,64,128,256,512"
-unet_strides: "2,2,2,1"
-unet_num_res_units: 2
-unet_norm: BATCH
+# spatial size of input patches (must match the image size used during pretraining)
+swinunetr_img_size: 96
+
+# feature size (must match the feature_size used during pretraining)
+swinunetr_feature_size: 48
 
 # -------------------------
 # Logging
@@ -106,5 +107,3 @@ wandb_project: lsm_finetune_segmentation
 
 # optional wandb run name (set to null to use wandb auto-generated name)
 run_name: null
-
-

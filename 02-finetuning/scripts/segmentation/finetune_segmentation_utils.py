@@ -1,9 +1,8 @@
-# finetune_segmentation_unet.py - Finetune pretrained LSM UNet backbone for segmentation
+# finetune_segmentation_utils.py - Shared utilities, dataset, and base Lightning module for segmentation finetuning
 
 # --- Setup ---
 
 # imports
-import argparse
 import csv
 import gc
 from dataclasses import dataclass
@@ -15,22 +14,19 @@ from pathlib import Path
 import random
 import sys
 import time
-import yaml
 import wandb
 
 from monai.losses import DiceCELoss, DiceFocalLoss
 from monai.metrics import DiceMetric
-from monai.networks.nets import Unet
 
 import torch
 from torch.utils.data import DataLoader, Dataset, get_worker_info
 
 import pytorch_lightning as pl
-from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from pytorch_lightning.loggers import WandbLogger
 
 # get augmentation functions
-sys.path.append('../../00-helpers/')
+sys.path.append('../../../00-helpers/')
 from all_datasets_transforms import get_finetune_train_transforms, get_finetune_val_transforms
 
 torch.set_float32_matmul_precision("medium")
@@ -48,6 +44,7 @@ def _seed_everything(seed: int):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
+
 # function to seed each dataloader worker differently (avoids identical augmentations across workers)
 def _seed_worker(_):
     info = get_worker_info()
@@ -55,6 +52,7 @@ def _seed_worker(_):
         base_seed = torch.initial_seed() % 2**31
         random.seed(base_seed + info.id)
         np.random.seed(base_seed + info.id)
+
 
 # helper to format seconds as H:MM:SS
 def _format_hms(seconds):
@@ -198,38 +196,15 @@ class NiftiPairDictDataset(Dataset):
 
 
 # -------------------------
-# Lightning Module
+# Base Lightning Module
 # -------------------------
 
-class FinetuneUNetModule(pl.LightningModule):
+# base class for segmentation finetuning — shared training/validation logic
+# subclasses must implement: __init__ (build self.model), on_train_epoch_start, configure_optimizers
+class FinetuneBaseModule(pl.LightningModule):
 
-    def __init__(
-        self,
-        pretrained_ckpt,
-        lr,
-        weight_decay,
-        loss_name,
-        encoder_lr_mult,
-        freeze_encoder_epochs,
-        freeze_bn_stats,
-        channels,
-        strides,
-        num_res_units,
-        norm,
-    ):
-        super().__init__()
-        self.save_hyperparameters()
-
-        # UNet with out_channels=1 for binary segmentation
-        self.model = Unet(
-            spatial_dims=3,
-            in_channels=1,
-            out_channels=1,
-            channels=tuple(channels),
-            strides=tuple(strides),
-            num_res_units=int(num_res_units),
-            norm=str(norm),
-        )
+    def _init_shared(self, loss_name, freeze_bn_stats):
+        """Call this at the end of __init__ in each subclass to initialize shared state."""
 
         # loss function
         ln = str(loss_name).lower()
@@ -238,10 +213,7 @@ class FinetuneUNetModule(pl.LightningModule):
         else:
             self.loss_fn = DiceCELoss(sigmoid=True)
 
-        self._freeze_encoder_epochs = int(freeze_encoder_epochs)
-        self._encoder_frozen = self._freeze_encoder_epochs > 0
         self._freeze_bn_stats = bool(int(freeze_bn_stats))
-
         self.val_dice = DiceMetric(include_background=False, reduction="mean")
 
         # wandb image logging state
@@ -249,11 +221,8 @@ class FinetuneUNetModule(pl.LightningModule):
         self._val_logged = 0
         self._val_max_log = 5
 
-        # load pretrained weights
-        if pretrained_ckpt is not None and str(pretrained_ckpt).strip() != "":
-            self._load_pretrained(pretrained_ckpt)
-        else:
-            print("[INFO] Initializing UNet from scratch (no pretrained checkpoint).", flush=True)
+    def forward(self, x):
+        return self.model(x)
 
     # load pretrained checkpoint and map student_encoder.* -> model.*
     def _load_pretrained(self, ckpt_path):
@@ -283,9 +252,7 @@ class FinetuneUNetModule(pl.LightningModule):
             f"missing={len(incompat.missing_keys)} unexpected={len(incompat.unexpected_keys)}",
             flush=True,
         )
-
-    def forward(self, x):
-        return self.model(x)
+        print("[DEBUG] Missing keys:", incompat.missing_keys[:10], flush=True)
 
     # freeze BN stats if configured
     def on_train_start(self):
@@ -305,18 +272,6 @@ class FinetuneUNetModule(pl.LightningModule):
         else:
             self._val_table = None
 
-    # freeze encoder for configured number of warmup epochs then unfreeze
-    def on_train_epoch_start(self):
-        if self._encoder_frozen and self.current_epoch < self._freeze_encoder_epochs:
-            for name, p in self.model.named_parameters():
-                if not name.startswith("model.2."):
-                    p.requires_grad = False
-        elif self._encoder_frozen and self.current_epoch >= self._freeze_encoder_epochs:
-            print(f"[INFO] Unfreezing encoder at epoch {self.current_epoch}.", flush=True)
-            for _, p in self.model.named_parameters():
-                p.requires_grad = True
-            self._encoder_frozen = False
-
     def training_step(self, batch, batch_idx):
         x = batch["image"]
         y = batch["label"].float()
@@ -333,7 +288,7 @@ class FinetuneUNetModule(pl.LightningModule):
         self.log("val_loss", loss, on_step=False, on_epoch=True, prog_bar=True, batch_size=x.shape[0])
 
         probs = torch.sigmoid(logits)
-        pred = (probs >= 0.5).float() # Dice@0.5
+        pred = (probs >= 0.5).float()  # Dice@0.5
         self.val_dice(pred, y)
 
         # log sample images to wandb table
@@ -359,72 +314,28 @@ class FinetuneUNetModule(pl.LightningModule):
             self.logger.experiment.log({f"val_samples_epoch_{self.current_epoch}": self._val_table}, commit=False)
         self._val_table = None
 
-    def configure_optimizers(self):
-        base_lr = float(self.hparams.lr)
-        wd = float(self.hparams.weight_decay)
-        enc_mult = float(self.hparams.encoder_lr_mult)
-
-        backbone, head = [], []
-        for name, p in self.model.named_parameters():
-            if name.startswith("model.2."):
-                head.append(p)
-            else:
-                backbone.append(p)
-
-        return torch.optim.AdamW(
-            [{"params": backbone, "lr": base_lr * enc_mult},
-             {"params": head, "lr": base_lr}],
-            weight_decay=wd,
-            betas=(0.9, 0.999),
-        )
-
 
 # -------------------------
-# Main
+# Shared Main Logic
 # -------------------------
 
+# function to load config from yaml file
 def load_config(path):
+    import yaml
     with open(path, "r") as f:
         return yaml.safe_load(f)
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, required=True, help="Path to YAML config file.")
-    args = parser.parse_args()
-    cfg = load_config(args.config)
+# function to build dataloaders from config
+def build_dataloaders(cfg, seed):
 
-    # seed
-    seed = int(cfg.get("seed", 100))
-    _seed_everything(seed)
-
-    # paths
     train_dir = Path(cfg["train_dir"])
     val_dir = cfg.get("val_dir", None)
     test_dir = cfg.get("test_dir", None)
-    out_root = Path(cfg["out_root"])
-    pretrained_ckpt = cfg.get("pretrained_ckpt", None)
     channel_substr = cfg.get("channel_substr", "ALL")
-
-    # if init is scratch, ignore any pretrained ckpt
-    if cfg.get("init", "pretrained") == "scratch":
-        pretrained_ckpt = None
-        print("[INFO] init=scratch: ignoring pretrained_ckpt.", flush=True)
-
-    # create output dirs
-    ckpt_dir = out_root / "checkpoints"
-    preds_dir = out_root / "preds"
-    logs_dir = out_root / "logs"
-    for d in [ckpt_dir, preds_dir, logs_dir]:
-        d.mkdir(parents=True, exist_ok=True)
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    t0 = time.perf_counter()
-    print(f"[INFO] Device: {device}", flush=True)
-    print(f"[INFO] Start: {datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')}", flush=True)
+    file_prefix = cfg.get("file_prefix", None)
 
     # discover pairs
-    file_prefix = cfg.get("file_prefix", None)
     train_pairs_raw = discover_pairs(train_dir, channel_substr=channel_substr, file_prefix=file_prefix)
     print(f"[INFO] Found {len(train_pairs_raw)} pairs in train_dir: {train_dir}", flush=True)
 
@@ -469,128 +380,59 @@ def main():
     val_loader = DataLoader(NiftiPairDictDataset(val_pairs, transform=val_tf),
                             batch_size=1, shuffle=False, **loader_kw)
 
-    # wandb
-    wandb_project = cfg.get("wandb_project", None)
-    run_name = cfg.get("run_name", None)
-    wandb_logger = WandbLogger(project=wandb_project, name=run_name) if wandb_project else None
-
-    # model
-    unet_channels = tuple(int(x) for x in str(cfg.get("unet_channels", "32,64,128,256,512")).split(","))
-    unet_strides = tuple(int(x) for x in str(cfg.get("unet_strides", "2,2,2,1")).split(","))
-
-    model = FinetuneUNetModule(
-        pretrained_ckpt=pretrained_ckpt,
-        lr=float(cfg.get("lr", 3e-4)),
-        weight_decay=float(cfg.get("weight_decay", 1e-5)),
-        loss_name=cfg.get("loss_name", "dicefocal"),
-        encoder_lr_mult=float(cfg.get("encoder_lr_mult", 0.2)),
-        freeze_encoder_epochs=int(cfg.get("freeze_encoder_epochs", 10)),
-        freeze_bn_stats=int(cfg.get("freeze_bn_stats", 1)),
-        channels=unet_channels,
-        strides=unet_strides,
-        num_res_units=int(cfg.get("unet_num_res_units", 2)),
-        norm=cfg.get("unet_norm", "BATCH"),
-    )
-
-    # callbacks
-    model_ckpt = ModelCheckpoint(
-        monitor="val_loss",
-        mode="min",
-        save_top_k=1,
-        save_last=True,
-        dirpath=str(ckpt_dir),
-        filename="finetune_unet_best",
-    )
-    early_stopping = EarlyStopping(
-        monitor="val_loss",
-        mode="min",
-        patience=int(cfg.get("early_stopping_patience", 200)),
-    )
-
-    trainer = pl.Trainer(
-        max_epochs=int(cfg.get("max_epochs", 600)),
-        accelerator="gpu" if torch.cuda.is_available() else "cpu",
-        devices=1,
-        precision="bf16-mixed" if torch.cuda.is_available() else 32,
-        logger=wandb_logger,
-        callbacks=[model_ckpt, early_stopping],
-        log_every_n_steps=10,
-        deterministic=True,
-    )
-
-    # train
-    print(f"[INFO] Starting training: {len(train_pairs)} train, {len(val_pairs)} val pairs.", flush=True)
-    trainer.fit(model, train_loader, val_loader)
-
-    best_ckpt = model_ckpt.best_model_path
-    last_ckpt = str(ckpt_dir / "finetune_unet_best-v1.ckpt")
-    if not best_ckpt or not os.path.exists(best_ckpt):
-        trainer.save_checkpoint(str(ckpt_dir / "last.ckpt"))
-        best_ckpt = str(ckpt_dir / "last.ckpt")
-        print(f"[WARN] Best ckpt missing, using last: {best_ckpt}", flush=True)
-
-    print(f"[INFO] Best checkpoint: {best_ckpt}", flush=True)
-
-    # inference on test set (if provided)
-    if test_pairs:
-        infer_ckpt_choice = cfg.get("infer_ckpt", "best")
-        infer_ckpt = best_ckpt if infer_ckpt_choice == "best" else last_ckpt
-        print(f"[INFO] Running inference with ckpt: {infer_ckpt}", flush=True)
-
-        infer_model = FinetuneUNetModule.load_from_checkpoint(infer_ckpt).to(device).eval()
-        test_loader = DataLoader(NiftiPairDictDataset(test_pairs, transform=val_tf),
-                                 batch_size=1, shuffle=False, **loader_kw)
-
-        rows = []
-        for batch in test_loader:
-            x = batch["image"]
-            y = batch["label"]
-            fname = Path(batch["filename"][0])
-
-            logits = predict_logits(infer_model, x)
-            dice_050 = dice_at_threshold_from_logits(logits, y, threshold=0.5)
-
-            probs = torch.sigmoid(logits)
-            mask_bin = (probs >= 0.5).to(torch.uint8)
-
-            base_stem = fname.stem.replace(".nii", "").replace(".gz", "")
-            pred_path = preds_dir / f"{base_stem}_pred.nii.gz"
-            prob_path = preds_dir / f"{base_stem}_prob.nii.gz"
-            save_pred_nii(mask_bin, like_path=fname, out_path=pred_path)
-            save_prob_nii(probs, like_path=fname, out_path=prob_path)
-
-            rows.append({
-                "filename": fname.name,
-                "image_path": str(fname),
-                "dice_050": f"{dice_050:.6f}",
-                "pred_path": str(pred_path),
-                "prob_path": str(prob_path),
-            })
-            print(f"[INFO] {fname.name}  Dice@0.5={dice_050:.6f}", flush=True)
-
-        if rows:
-            mean_dice = float(np.mean([float(r["dice_050"]) for r in rows]))
-            rows.append({"filename": "MEAN", "image_path": "", "dice_050": f"{mean_dice:.6f}", "pred_path": "", "prob_path": ""})
-            print(f"[INFO] Mean test Dice@0.5 = {mean_dice:.6f}", flush=True)
-            if wandb_logger:
-                wandb_logger.experiment.summary["test_mean_dice_050"] = mean_dice
-
-        metrics_csv = preds_dir / "metrics_test.csv"
-        with open(metrics_csv, "w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=["filename", "image_path", "dice_050", "pred_path", "prob_path"])
-            writer.writeheader()
-            writer.writerows(rows)
-        print(f"[INFO] Metrics saved to: {metrics_csv}", flush=True)
-
-        del infer_model, test_loader
-        gc.collect()
-
-    dt = time.perf_counter() - t0
-    print(f"[INFO] Finished. Runtime: {_format_hms(dt)} ({dt:.2f}s)", flush=True)
+    return train_loader, val_loader, train_pairs, val_pairs, test_pairs, val_tf, loader_kw
 
 
-if __name__ == "__main__":
-    main()
+# function to run inference on test set and write metrics CSV
+def run_inference(cfg, model_cls, infer_ckpt, test_pairs, val_tf, loader_kw, preds_dir, wandb_logger):
 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"[INFO] Running inference with ckpt: {infer_ckpt}", flush=True)
 
+    infer_model = model_cls.load_from_checkpoint(infer_ckpt).to(device).eval()
+    test_loader = DataLoader(NiftiPairDictDataset(test_pairs, transform=val_tf),
+                             batch_size=1, shuffle=False, **loader_kw)
 
+    rows = []
+    for batch in test_loader:
+        x = batch["image"]
+        y = batch["label"]
+        fname = Path(batch["filename"][0])
+
+        logits = predict_logits(infer_model, x)
+        dice_050 = dice_at_threshold_from_logits(logits, y, threshold=0.5)
+
+        probs = torch.sigmoid(logits)
+        mask_bin = (probs >= 0.5).to(torch.uint8)
+
+        base_stem = fname.stem.replace(".nii", "").replace(".gz", "")
+        pred_path = preds_dir / f"{base_stem}_pred.nii.gz"
+        prob_path = preds_dir / f"{base_stem}_prob.nii.gz"
+        save_pred_nii(mask_bin, like_path=fname, out_path=pred_path)
+        save_prob_nii(probs, like_path=fname, out_path=prob_path)
+
+        rows.append({
+            "filename": fname.name,
+            "image_path": str(fname),
+            "dice_050": f"{dice_050:.6f}",
+            "pred_path": str(pred_path),
+            "prob_path": str(prob_path),
+        })
+        print(f"[INFO] {fname.name}  Dice@0.5={dice_050:.6f}", flush=True)
+
+    if rows:
+        mean_dice = float(np.mean([float(r["dice_050"]) for r in rows]))
+        rows.append({"filename": "MEAN", "image_path": "", "dice_050": f"{mean_dice:.6f}", "pred_path": "", "prob_path": ""})
+        print(f"[INFO] Mean test Dice@0.5 = {mean_dice:.6f}", flush=True)
+        if wandb_logger:
+            wandb_logger.experiment.summary["test_mean_dice_050"] = mean_dice
+
+    metrics_csv = preds_dir / "metrics_test.csv"
+    with open(metrics_csv, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["filename", "image_path", "dice_050", "pred_path", "prob_path"])
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"[INFO] Metrics saved to: {metrics_csv}", flush=True)
+
+    del infer_model, test_loader
+    gc.collect()

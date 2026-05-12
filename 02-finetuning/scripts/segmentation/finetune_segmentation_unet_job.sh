@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=finetune_unet
-#SBATCH --output=../output/logs/finetune_unet_%j.out
-#SBATCH --error=../output/logs/finetune_unet_%j.err
+#SBATCH --output=/home/ads4015/lsm_fm_public_repo/02-finetuning/output/logs/finetune_unet_%j.out
+#SBATCH --error=/home/ads4015/lsm_fm_public_repo/02-finetuning/output/logs/finetune_unet_%j.err
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=gpu   # <-- update to your cluster's GPU partition name
 #SBATCH --gres=gpu:1
@@ -41,7 +41,7 @@ export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 # create output log directory
-mkdir -p ../output/logs
+mkdir -p ../../output/logs
 
 # path to config file — update this to point to your config
 CONFIG_PATH="finetune_segmentation_unet_config.yaml"
@@ -60,6 +60,4 @@ echo "[INFO] Job finished at $(date -d @${END_EPOCH} '+%Y-%m-%d %H:%M:%S')"
 echo "[INFO] Total runtime: $((ELAPSED / 3600)):$(( (ELAPSED % 3600) / 60 )):$(( ELAPSED % 60 ))s"
 
 echo "LSM UNet finetuning complete."
-
-
 
