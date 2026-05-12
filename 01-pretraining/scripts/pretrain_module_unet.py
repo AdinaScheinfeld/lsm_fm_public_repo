@@ -5,10 +5,7 @@
 # imports
 import numpy as np
 import os
-import random
 import sys
-# import seaborn as sns
-# import umap
 import wandb
 
 import matplotlib.cm as cm
@@ -170,8 +167,8 @@ class PretrainModuleUnet(pl.LightningModule):
 
         # text encoder (only used if use_text=True)
         if self.use_text:
-            self.text_tokenizer = AutoTokenizer.from_pretrained(self.text_model_name)
-            self.text_encoder = AutoModel.from_pretrained(self.text_model_name)
+            self.text_tokenizer = AutoTokenizer.from_pretrained(self.text_model_name, local_files_only=True)
+            self.text_encoder = AutoModel.from_pretrained(self.text_model_name, local_files_only=True)
             self.text_encoder.gradient_checkpointing_enable()
 
             # projection head to map text encoder output to same dimension as image encoder output for CLIP loss and alignment loss

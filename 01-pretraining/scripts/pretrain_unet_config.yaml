@@ -82,7 +82,7 @@ model:
   mask_patch_size: 8 # base patch size for masking
   temp_student: 0.1 # temperature for student logits
   temp_teacher: 0.1 # temperature for teacher softmax
-  text_model_name: ../setup/pretrained_models/bert-base-uncased # text model to use (bert-base-uncased from HuggingFace)
+  text_model_name: ../../setup/pretrained_models/bert-base-uncased # text model to use (bert-base-uncased from HuggingFace)
   embed_dim: 128 # dimension of image and text embeddings (must be the same for CLIP loss)
   clip_temperature: 0.1 # temperature for CLIP loss
   save_filename: pretrained_unet

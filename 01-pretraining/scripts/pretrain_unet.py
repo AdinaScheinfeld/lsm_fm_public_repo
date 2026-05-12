@@ -113,6 +113,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
     config = load_config(args.config)
 
+    # resolve text_model_name relative to config file location (required for SLURM worker nodes)
+    if config.get('model', {}).get('text_model_name'):
+        config_dir = os.path.dirname(os.path.abspath(args.config))
+        config['model']['text_model_name'] = os.path.normpath(
+            os.path.join(config_dir, config['model']['text_model_name'])
+        )
+
     # set seed for reproducibility
     pl.seed_everything(config['training']['seed'])
 
