@@ -9,3 +9,5 @@ __pycache__/
 pretrained_models/
 
 wandb/
+
+slurm-*.out
