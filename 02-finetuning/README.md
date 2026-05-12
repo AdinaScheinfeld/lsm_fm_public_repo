@@ -1,15 +1,16 @@
 # Light Sheet Microscopy Foundation Model — Finetuning
 
-This directory contains code for finetuning and running inference using a light sheet microscopy (LSM) 3D foundation model. Two downstream tasks are supported: **segmentation** and **classification**. For each task, two backbone architectures are available: UNet and SwinUNETR.
+This directory contains code for finetuning and running inference using a light sheet microscopy (LSM) 3D foundation model. Three downstream tasks are supported: **segmentation**, **classification**, and **deblurring**. For each task, two backbone architectures are available: UNet and SwinUNETR.
 
 ---
 
 ## Contents
 
-- [sample_patches](sample_patches/) - Subfolder for sample NIfTI image files and binary label masks.
+- [sample_patches](sample_patches/) - Subfolder for sample NIfTI image files, binary label masks, and blurred patches.
 - [scripts](scripts/) - Code for finetuning LSM foundation model.
-  - [scripts/segmentation](scripts/segmentation/) - Segmentation finetuning scripts.
-  - [scripts/classification](scripts/classification/) - Classification finetuning scripts.
+  - [scripts/segmentation](scripts/segmentation/) - Binary segmentation finetuning scripts.
+  - [scripts/classification](scripts/classification/) - Multiclass patch classification finetuning scripts.
+  - [scripts/deblurring](scripts/deblurring/) - Image deblurring finetuning scripts.
 
 ---
 
@@ -48,6 +49,7 @@ Choose your task and backbone, then follow the relevant README:
 
 - **Segmentation** — see [scripts/segmentation/README.md](scripts/segmentation/README.md)
 - **Classification** — see [scripts/classification/README.md](scripts/classification/README.md)
+- **Deblurring** — see [scripts/deblurring/README.md](scripts/deblurring/README.md)
 
 ---
 
