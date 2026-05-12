@@ -69,6 +69,8 @@ def discover_samples(root_dir: Path, channel_substr="ALL"):
         lower = p.name.lower()
         if lower.endswith("_label.nii") or lower.endswith("_label.nii.gz"):
             continue  # skip segmentation label files
+        if lower.endswith("_blurred.nii") or lower.endswith("_blurred.nii.gz"):
+            continue
         if substrings is not None and not any(tok in lower for tok in substrings):
             continue  # skip if channel filter not matched
         all_files.append(p)

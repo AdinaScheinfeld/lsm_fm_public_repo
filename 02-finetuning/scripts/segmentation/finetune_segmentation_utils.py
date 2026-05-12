@@ -90,6 +90,8 @@ def discover_pairs(data_dir: Path, channel_substr="ALL", file_prefix=None):
         lower = p.name.lower()
         if lower.endswith("_label.nii") or lower.endswith("_label.nii.gz"):
             continue
+        if lower.endswith("_blurred.nii") or lower.endswith("_blurred.nii.gz"):
+            continue
         if prefix and not lower.startswith(prefix):
             continue
         if substrings is not None and not any(sub in lower for sub in substrings):
