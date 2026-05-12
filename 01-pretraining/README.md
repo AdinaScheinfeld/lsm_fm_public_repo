@@ -1,13 +1,13 @@
 # Light Sheet Microscopy Foundation Model — Pretraining
 
-This directory contains code for pretraining a 3D UNet-based foundation model on light sheet microscopy (LSM) image patches, with support for both image+text and image-only pretraining.
+This directory contains code for pretraining 3D foundation models on light sheet microscopy (LSM) image patches, with support for both image+text and image-only pretraining. Two backbone architectures are supported: UNet and SwinUNETR.
 
 ---
 
 ## Contents
 
 - [sample_patches](sample_patches/) - Subfolder for sample NIfTI image files and JSON text prompts.
-- [scripts](scripts/) - Code for pretraining LSM foundation model. 
+- [scripts](scripts/) - Code for pretraining LSM foundation model.
 
 ---
 
@@ -22,7 +22,7 @@ This directory contains code for pretraining a 3D UNet-based foundation model on
 
 ### Step 1 - Clone the Repo
 
-Clone this repo so you have your own working copy. 
+Clone this repo so you have your own working copy.
 
 ### Step 2 - Create the Conda Environment
 
@@ -41,11 +41,15 @@ If you plan to run image+text pretraining, download and save the BERT model loca
 python setup/download_bert_model.py
 ```
 
-This saves `bert-base-uncased` to `setup/pretrained_models/bert-base-uncased/`. The config file already points to this location by default.
+This saves `bert-base-uncased` to `setup/pretrained_models/bert-base-uncased/`. The config files already point to this location by default.
 
 ### Step 4 - Configure Training
 
-Edit `01-pretraining/scripts/pretrain_config_unet.yaml` to match your setup. The key fields to update are:
+Edit the config file for your chosen backbone to match your setup.
+
+**For UNet:** edit `01-pretraining/scripts/pretrain_config_unet.yaml`
+
+**For SwinUNETR:** edit `01-pretraining/scripts/pretrain_swinunetr_config.yaml`
 
 **Training mode** — set `use_text: true` for image+text pretraining, `false` for image-only:
 ```yaml
@@ -55,7 +59,11 @@ model:
 
 ### Step 5 - Configure the Job Script
 
-Edit `01-pretraining/scripts/pretrain_unet_job.sh` and update the following:
+Edit the job script for your chosen backbone and update the following:
+
+**For UNet:** edit `01-pretraining/scripts/pretrain_unet_job.sh`
+
+**For SwinUNETR:** edit `01-pretraining/scripts/pretrain_swinunetr_job.sh`
 
 **SLURM resource requests** — update to match your cluster:
 ```bash
@@ -76,13 +84,21 @@ Or run `wandb login` interactively before submitting the job.
 
 ### Step 6 - Run Pretraining
 
-Submit the job:
+Submit the job for your chosen backbone:
+
+**UNet:**
 ```bash
 cd 01-pretraining/scripts
 sbatch pretrain_unet_job.sh
 ```
 
-This will pretrain a UNet backbone using the sample patches and text descriptions provided in `01-pretraining/sample_patches/`. Checkpoints and logs will be written to `01-pretraining/output/`. Training progress, losses, and reconstructed image samples are logged to WandB.
+**SwinUNETR:**
+```bash
+cd 01-pretraining/scripts
+sbatch pretrain_swinunetr_job.sh
+```
+
+This will pretrain the backbone using the sample patches and text descriptions provided in `01-pretraining/sample_patches/`. Checkpoints and logs will be written to `01-pretraining/output/`. Training progress, losses, and reconstructed image samples are logged to WandB.
 
 ---
 
@@ -101,7 +117,7 @@ You can add additional NIfTI patch files (`.nii.gz`) according to the structure 
 | Wu Brain | `<root>/<volume>/input/*.nii.gz` | `text_prompts_wu.json` |
 
 
-**Enable/disable sources** — When adding additional datasets, be sure to set each source to `True` or `False` accordingly in `01-pretraining/scripts/pretrain_config_unet.yaml`:
+**Enable/disable sources** — When adding additional datasets, be sure to set each source to `True` or `False` accordingly in the config file for your chosen backbone:
 ```yaml
   enable:
     connection: False
@@ -110,37 +126,56 @@ You can add additional NIfTI patch files (`.nii.gz`) according to the structure 
     selma: False
     wu: True
 ```
+
 ---
 
 ### Additional Configuration Options
 
-The following parameters can be edited in `01-pretraining/scripts/pretrain_config_unet.yaml`:
+The following parameters can be edited in the config file for your chosen backbone:
 
 | Parameter | Location | Description |
 |-----------|----------|-------------|
 | `max_epochs` | `training` | Total number of epochs to train for |
-| `patience` | `training` | Use for early stopping (set to a high value to effectively disable)
+| `patience` | `training` | Use for early stopping (set to a high value to effectively disable) |
 | `downsample.enabled` | `downsample` | If `true`, downsamples $96^3$ patches to `target_size`$^3$ before training |
 | `global_batch_size` | `data` | Total batch size (automatically divided across GPUs) (default: 16) |
 | `mask_ratio_warmup` | `model` | Mask ratio used during warmup epochs (default: 0.05) |
-| `warmup_epochs` | `model` | Number of warmup epochs (default: 20) |
+| `warmup_epochs` | `model` | Number of warmup epochs |
 | `mask_ratio` | `model` | Fraction of voxels masked during training (default: 0.3) |
 | `lr` | `model` | Learning rate (default: 0.0001) |
 | `mask_patch_size` | `model` | Base mask size (default: 8) |
 | `save_dirpath` | `model` | Directory in which to save model checkpoints and logs |
-| `distill_weight` | `loss_weights` | Weight for student-teacher KL divergence loss (default: 0.29) |
-| `reconstruction_weight` | `loss_weights` | Weight for masked voxel L1 reconstruction loss (default: 0.20) |
-| `align_weight` | `loss_weights` | Weight for per-pair image-text cosine alignment loss (default: 0.06) |
-| `clip_weight` | `loss_weights` | Weight for contrastive image-text CLIP loss (default: 0.36) |
+| `distill_weight` | `loss_weights` | Weight for student-teacher KL divergence loss |
+| `reconstruction_weight` | `loss_weights` | Weight for masked voxel L1 reconstruction loss |
+| `align_weight` | `loss_weights` | Weight for per-pair image-text cosine alignment loss |
+| `clip_weight` | `loss_weights` | Weight for contrastive image-text CLIP loss |
+
+The following architecture-specific parameters can also be configured:
+
+**UNet** — edit the `unet:` block in `pretrain_config_unet.yaml`:
+
+| Parameter | Description |
+|-----------|-------------|
+| `channels` | Number of feature channels at each encoder level (default: [32, 64, 128, 256, 512]) |
+| `strides` | Downsampling strides for each level (default: [2, 2, 2, 1]) |
+| `num_res_units` | Number of residual units per level (default: 2) |
+| `norm` | Normalization type: `BATCH`, `INSTANCE`, or `LAYER` (default: BATCH) |
+
+**SwinUNETR** — edit the `swinunetr:` block in `pretrain_swinunetr_config.yaml`:
+
+| Parameter | Description |
+|-----------|-------------|
+| `feature_size` | Controls model capacity; larger values increase parameters (default: 48) |
+| `use_checkpoint` | Enable gradient checkpointing to reduce memory usage (default: true) |
 
 ---
 
 ### Hardware
 
-You may also need to update the GPU configurations to match your available hardware
+You may also need to update the GPU configurations to match your available hardware:
 
 ```yaml
-# /01-pretraining/scripts/pretrain_config_unet.yaml
+# config file
 
 dist:
   devices: 2          # number of GPUs per node
@@ -148,12 +183,10 @@ dist:
   accumulate_grad_batches: 8
 ```
 
-
-
 ```bash
-# /01-pretraining/scripts/pretrain_unet_job.sh
+# job script
 
-#SBATCH --gres=gpu:h100:2         # GPU type and count
+#SBATCH --gres=gpu:2              # GPU count
 #SBATCH --mem=180G
 #SBATCH --cpus-per-task=16
 #SBATCH --ntasks-per-node=2       # must match number of GPUs
@@ -165,13 +198,15 @@ dist:
 
 To resume training from the last checkpoint:
 ```bash
-sbatch pretrain_unet.sh --resume
+sbatch pretrain_unet_job.sh --resume
 ```
 
 To resume from a specific checkpoint:
 ```bash
-srun python pretrain_unet.py --config ../configs/pretrain_config_unet.yaml --ckpt_path /path/to/checkpoint.ckpt
+srun python pretrain_unet.py --config pretrain_config_unet.yaml --ckpt_path /path/to/checkpoint.ckpt
 ```
+
+The same `--resume` and `--ckpt_path` flags are available for the SwinUNETR scripts.
 
 ---
 
@@ -182,3 +217,4 @@ srun python pretrain_unet.py --config ../configs/pretrain_config_unet.yaml --ckp
 - The model uses instance normalization and is robust to different intensity ranges — intensity is normalized to [0, 1] via percentile scaling during loading
 - With `use_text: false`, BERT is never loaded and CLIP/alignment losses are zero — the model trains purely on masked image reconstruction and teacher distillation
 - Prompt JSON files for disabled sources do not need to exist — missing files are skipped automatically
+- `unet_strides` in the UNet config must match between pretraining and finetuning configs — if you change the default strides during pretraining, use the same values when finetuning
