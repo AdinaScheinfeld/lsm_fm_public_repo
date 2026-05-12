@@ -338,4 +338,3 @@ dependencies:
     - watchdog==6.0.0
     - yarl==1.18.3
     - zarr==2.18.2
-prefix: /midtier/paetzollab/scratch/ads4015/conda/envs/lsm-pretrain
