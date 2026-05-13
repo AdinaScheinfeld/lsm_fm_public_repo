@@ -1,16 +1,21 @@
 # Light Sheet Microscopy Foundation Model — Finetuning
 
-This directory contains code for finetuning and running inference using a light sheet microscopy (LSM) 3D foundation model. Three downstream tasks are supported: **segmentation**, **classification**, and **deblurring**. For each task, two backbone architectures are available: UNet and SwinUNETR.
+Finetune a pretrained LSM foundation model on your own data. Three downstream tasks are supported, each with **UNet** and **SwinUNETR** backbones.
+
+| Task | Input | Output | Metric |
+|---|---|---|---|
+| ✂️ [**Segmentation**](scripts/segmentation/README.md) | Image + binary label mask | Predicted binary mask | Dice@0.5 |
+| 🏷️ [**Classification**](scripts/classification/README.md) | Image patch | Predicted class label | Accuracy, macro F1 |
+| ✨ [**Deblurring**](scripts/deblurring/README.md) | Blurred/sharp image pair | Deblurred NIfTI prediction | PSNR, SSIM |
 
 ---
 
 ## Contents
 
-- [sample_patches](sample_patches/) - Subfolder for sample NIfTI image files, binary label masks, and blurred patches.
-- [scripts](scripts/) - Code for finetuning LSM foundation model.
-  - [scripts/segmentation](scripts/segmentation/) - Binary segmentation finetuning scripts.
-  - [scripts/classification](scripts/classification/) - Multiclass patch classification finetuning scripts.
-  - [scripts/deblurring](scripts/deblurring/) - Image deblurring finetuning scripts.
+- [`sample_patches/`](sample_patches/) — Sample NIfTI patches, binary label masks, and blurred patches for smoke testing.
+- [`scripts/segmentation/`](scripts/segmentation/) — Binary segmentation finetuning scripts.
+- [`scripts/classification/`](scripts/classification/) — Multiclass patch classification finetuning scripts.
+- [`scripts/deblurring/`](scripts/deblurring/) — Image deblurring finetuning scripts.
 
 ---
 
@@ -22,41 +27,50 @@ This directory contains code for finetuning and running inference using a light 
 - NVIDIA GPU(s) with CUDA support (tested on H100 96GB)
 - Conda
 
-### Important
+---
 
-If you already ran pretraining using the scripts provided in `01-pretraining/`, skip to [Step 4](#step-4---configure-training), otherwise, begin with [Step 1](#step-1---clone-the-repo).
+### Step 1 — Install
 
-### Step 1 - Clone the Repo
-
-Clone this repo so you have your own working copy.
-
-### Step 2 - Create the Conda Environment
+> **Already ran pretraining?** Skip to [Step 3](#step-3--get-a-pretrained-checkpoint).
 
 ```bash
+git clone https://github.com/AdinaScheinfeld/lsm_fm_public_repo.git
+cd lsm_fm_public_repo
 conda env create -f setup/environment.yaml
 conda activate lsm-pretrain
 ```
 
-This installs all required Python packages including PyTorch, MONAI, PyTorch Lightning, HuggingFace Transformers, and WandB.
+---
 
-### Step 3 - Download Pretrained Checkpoint
+### Step 2 — Get a pretrained checkpoint
 
-Pretrained UNet and SwinUNETR checkpoints (both image+text and image-only) are available at [https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516). Download the checkpoint for your chosen backbone and training mode and note the path — you will point the config file to it in Step 4.
+Pretrained checkpoints for all four model variants are available on Zenodo:
 
-### Step 4 - Configure Training
+**[https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516)**
 
-Choose your task and backbone, then follow the relevant README:
+| Checkpoint | Backbone | Mode |
+|---|---|---|
+| `pretrained_unet_image_text.ckpt` | UNet | Image + text |
+| `pretrained_unet_image_only.ckpt` | UNet | Image only |
+| `pretrained_swinunetr_image_text.ckpt` | SwinUNETR | Image + text |
+| `pretrained_swinunetr_image_only.ckpt` | SwinUNETR | Image only |
 
-- **Segmentation** — see [scripts/segmentation/README.md](scripts/segmentation/README.md)
-- **Classification** — see [scripts/classification/README.md](scripts/classification/README.md)
-- **Deblurring** — see [scripts/deblurring/README.md](scripts/deblurring/README.md)
+Download the checkpoint for your chosen backbone and note the path — you will set `pretrained_ckpt` in the config to point to it. To finetune from random initialization instead, set `init: scratch` in the config.
+
+---
+
+### Step 3 — Choose a task and follow its README
+
+Each task has its own config, job script, and README with full instructions:
+
+- ✂️ **Segmentation** — [scripts/segmentation/README.md](scripts/segmentation/README.md)
+- 🏷️ **Classification** — [scripts/classification/README.md](scripts/classification/README.md)
+- ✨ **Deblurring** — [scripts/deblurring/README.md](scripts/deblurring/README.md)
 
 ---
 
 ## Notes
 
-- Patch files must be in NIfTI format (`.nii.gz`), 3D, single-channel
-- All patches should be the same spatial size (default: 96×96×96 voxels)
-- The model is robust to different intensity ranges — intensity is normalized to [0, 1] during loading
-- Architecture parameters (`unet_strides`, `unet_norm`, `swinunetr_feature_size`, etc.) must match between pretraining and finetuning configs — mismatches will result in weights failing to load
-
+- Patch files must be in NIfTI format (`.nii.gz`), 3D, single-channel, default 96×96×96 voxels
+- Intensity is normalized to [0, 1] during loading — the model is robust to different intensity ranges
+- Architecture parameters (`unet_strides`, `unet_norm`, `swinunetr_feature_size`, etc.) must match between pretraining and finetuning configs — mismatches will cause weights to fail to load
