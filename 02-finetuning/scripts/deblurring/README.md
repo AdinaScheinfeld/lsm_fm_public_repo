@@ -2,7 +2,7 @@
 
 Finetune a pretrained LSM foundation model for **3D image deblurring** of light sheet microscopy patches.
 
-![Deblurring results](../../../media/deblurring_fig.png)
+<img src="../../../media/deblurring_fig.png" width="700" alt="Deblurring results">
 
 | | UNet | SwinUNETR |
 |---|---|---|

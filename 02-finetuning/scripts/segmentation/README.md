@@ -2,7 +2,7 @@
 
 Finetune a pretrained LSM foundation model for **binary segmentation** of 3D light sheet microscopy patches.
 
-![Segmentation results](../../../media/segmentation_fig.png)
+<img src="../../../media/segmentation_fig.png" width="700" alt="Segmentation results">
 
 | | UNet | SwinUNETR |
 |---|---|---|
