@@ -47,13 +47,54 @@ python setup/download_bert_model.py
 
 This saves `bert-base-uncased` to `setup/pretrained_models/bert-base-uncased/`. The config files already point to this location by default.
 
-### Step 4 - Configure Training
+### Step 4 - Download Training Data (optional)
+
+The full pretraining dataset is available on Zenodo at [https://doi.org/10.5281/zenodo.20149070](https://doi.org/10.5281/zenodo.20149070). Five dataset archives are provided, each as a `.tar.gz` file:
+
+| Archive | Source |
+|---|---|
+| `all_wu_brain_patches.tar.gz` | Wu brain atlas patches |
+| `all_selma_patches_96.tar.gz` | SELMA dataset patches |
+| `all_allen_human2_patches.tar.gz` | Allen Human Brain Atlas patches |
+| `all_allen_developing_mouse_patches.tar.gz` | Allen Developing Mouse Brain patches |
+| `all_allen_connection_projection_patches.tar.gz` | Allen Mouse Brain Connectivity Atlas patches |
+
+Download and extract whichever datasets you want to train on:
+
+```bash
+tar -xzf all_wu_brain_patches.tar.gz
+tar -xzf all_selma_patches_96.tar.gz
+# repeat for any other archives
+```
+
+If you only want to train on the sample patches included in the repo, skip this step.
+
+### Step 5 - Configure Training
 
 Edit the config file for your chosen backbone to match your setup.
 
-**For UNet:** edit `01-pretraining/scripts/pretrain_config_unet.yaml`
+**For UNet:** edit `01-pretraining/scripts/pretrain_unet_config.yaml`
 
 **For SwinUNETR:** edit `01-pretraining/scripts/pretrain_swinunetr_config.yaml`
+
+**Data paths** — point each source to the directory where you extracted the downloaded data, and set each source to `True` or `False` to enable or disable it:
+
+```yaml
+data:
+  roots:
+    connection: /path/to/all_allen_connection_projection_patches
+    dev_mouse: /path/to/all_allen_developing_mouse_patches
+    human2: /path/to/all_allen_human2_patches
+    selma: /path/to/all_selma_patches_96
+    wu: /path/to/all_wu_brain_patches
+
+  enable:
+    connection: True
+    dev_mouse: True
+    human2: True
+    selma: True
+    wu: True
+```
 
 **Training mode** — set `use_text: true` for image+text pretraining, `false` for image-only:
 ```yaml
@@ -61,7 +102,7 @@ model:
   use_text: true
 ```
 
-### Step 5 - Configure the Job Script
+### Step 6 - Configure the Job Script
 
 Edit the job script for your chosen backbone and update the following:
 
@@ -86,7 +127,7 @@ export WANDB_API_KEY=your_key_here
 ```
 Or run `wandb login` interactively before submitting the job.
 
-### Step 6 - Run Pretraining
+### Step 7 - Run Pretraining
 
 Submit the job for your chosen backbone:
 
@@ -108,28 +149,19 @@ This will pretrain the backbone using the sample patches and text descriptions p
 
 ## Advanced
 
-### Additional Datasets
+### Using the Full Training Datasets
 
-You can add additional NIfTI patch files (`.nii.gz`) according to the structure expected by each data source. When pretraining with image+text, each source also requires a corresponding JSON prompt file mapping stain/region labels to text descriptions. The supported sources and their expected directory layouts are:
+The full pretraining datasets are available on Zenodo at [https://doi.org/10.5281/zenodo.20149070](https://doi.org/10.5281/zenodo.20149070) — see [Step 4](#step-4---download-training-data-optional) for download instructions. Once extracted, each dataset has the following directory structure, which the data loading code expects automatically:
 
-| Source | Expected layout | Text Descriptions |
-|--------|----------------| -------------------- |
-| Allen Connection Projection | `<root>/<run>/c0\|c1\|c2/*.nii.gz` | `text_prompts_allen_connection.json` |
-| Allen Developing Mouse | `<root>/*.nii.gz` (flat) | `text_prompts_allen_dev_mouse.json` |
-| Allen Human2 | `<root>/<subject>/*.nii.gz` | `text_prompts_allen_human2.json` |
-| Selma | `<root>/<class>/*.nii.gz` | `text_prompts_selma.json` |
-| Wu Brain | `<root>/<volume>/input/*.nii.gz` | `text_prompts_wu.json` |
+| Source | Config key | Expected layout | Text prompt file |
+|--------|------------|----------------|-----------------|
+| Allen Connection Projection | `connection` | `<root>/<run>/c0\|c1\|c2/*.nii.gz` | `text_prompts_allen_connection.json` |
+| Allen Developing Mouse | `dev_mouse` | `<root>/*.nii.gz` (flat) | `text_prompts_allen_dev_mouse.json` |
+| Allen Human2 | `human2` | `<root>/<subject>/*.nii.gz` | `text_prompts_allen_human2.json` |
+| Selma | `selma` | `<root>/<class>/*.nii.gz` | `text_prompts_selma.json` |
+| Wu Brain | `wu` | `<root>/<volume>/input/*.nii.gz` | `text_prompts_wu.json` |
 
-
-**Enable/disable sources** — When adding additional datasets, be sure to set each source to `True` or `False` accordingly in the config file for your chosen backbone:
-```yaml
-  enable:
-    connection: False
-    dev_mouse: False
-    human2: False
-    selma: False
-    wu: True
-```
+No code changes are needed — just point each `roots` entry in the config to the extracted directory and set the corresponding `enable` flag to `True`.
 
 ---
 
@@ -222,4 +254,3 @@ The same `--resume` and `--ckpt_path` flags are available for the SwinUNETR scri
 - With `use_text: false`, BERT is never loaded and CLIP/alignment losses are zero — the model trains purely on masked image reconstruction and teacher distillation
 - Prompt JSON files for disabled sources do not need to exist — missing files are skipped automatically
 - `unet_strides` in the UNet config must match between pretraining and finetuning configs — if you change the default strides during pretraining, use the same values when finetuning
-
