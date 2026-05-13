@@ -4,9 +4,9 @@
 
 **Pretrain and finetune 3D foundation models for light sheet microscopy image analysis**
 
+[![arXiv](https://img.shields.io/badge/arXiv-coming%20soon-b31b1b?logo=arxiv)](https://arxiv.org)
 [![Pretrained Weights](https://img.shields.io/badge/Zenodo-Pretrained%20Weights-blue?logo=zenodo)](https://doi.org/10.5281/zenodo.20146516)
 [![Training Data](https://img.shields.io/badge/Zenodo-Training%20Data-blue?logo=zenodo)](https://doi.org/10.5281/zenodo.20149070)
-[![arXiv](https://img.shields.io/badge/arXiv-coming%20soon-b31b1b?logo=arxiv)](https://arxiv.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <!-- Pipeline figure — replace the line below with your methods figure once available -->
@@ -120,21 +120,6 @@ lsm_fm_public_repo/
 
 ## Citation
 
-If you use this code or the pretrained models in your work, please cite our paper (coming soon on arXiv):
-
-```bibtex
-@article{lsm_foundation_model,
-  title   = {coming soon},
-  author  = {coming soon},
-  journal = {arXiv},
-  year    = {2025}
-}
-```
-
----
-
-## Citation
-
 If you use this code or the pretrained models in your work, please cite our paper. The arXiv preprint is coming soon — this section will be updated with the full citation when it is available.
 
 ```bibtex
@@ -152,10 +137,3 @@ If you use this code or the pretrained models in your work, please cite our pape
 ## Contact
 
 If you have questions, encounter a bug, or run into issues running the code, please [open a GitHub issue](https://github.com/AdinaScheinfeld/lsm_fm_public_repo/issues) and we will do our best to help.
-
----
-
-- Patch files must be in NIfTI format (`.nii.gz`), 3D, and single-channel
-- Default patch size is 96×96×96 voxels
-- Intensity is normalized to [0, 1] during loading — the model is robust to different intensity ranges
-- Architecture parameters (`unet_strides`, `unet_norm`, `swinunetr_feature_size`, etc.) must match between pretraining and finetuning configs
