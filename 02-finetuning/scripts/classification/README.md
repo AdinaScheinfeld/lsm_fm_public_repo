@@ -1,151 +1,149 @@
-# Scripts — Classification
+# 🏷️ Classification
 
-Scripts for finetuning LSM foundation model for multiclass patch classification.
+Finetune a pretrained LSM foundation model for **multiclass patch classification** of 3D light sheet microscopy patches.
+
+![Classification results](../../../media/classification_fig.png)
+
+| | UNet | SwinUNETR |
+|---|---|---|
+| **Config** | `finetune_classification_unet_config.yaml` | `finetune_classification_swinunetr_config.yaml` |
+| **Job script** | `finetune_classification_unet_job.sh` | `finetune_classification_swinunetr_job.sh` |
+| **Submit** | `sbatch finetune_classification_unet_job.sh` | `sbatch finetune_classification_swinunetr_job.sh` |
 
 ---
 
 ## Contents
 
-**Shared**
-- [finetune_classification_utils.py](finetune_classification_utils.py) - Shared utilities, dataset, and base logic used by both backbones.
-
-**UNet**
-- [finetune_classification_unet.py](finetune_classification_unet.py) - UNet finetuning and inference script for classification.
-- [finetune_classification_unet_config.yaml](finetune_classification_unet_config.yaml) - Config file for UNet classification finetuning.
-- [finetune_classification_unet_job.sh](finetune_classification_unet_job.sh) - Job script to run UNet finetuning and inference for classification.
-
-**SwinUNETR**
-- [finetune_classification_swinunetr.py](finetune_classification_swinunetr.py) - SwinUNETR finetuning and inference script for classification.
-- [finetune_classification_swinunetr_config.yaml](finetune_classification_swinunetr_config.yaml) - Config file for SwinUNETR classification finetuning.
-- [finetune_classification_swinunetr_job.sh](finetune_classification_swinunetr_job.sh) - Job script to run SwinUNETR finetuning and inference for classification.
+| File | Description |
+|---|---|
+| [`finetune_classification_utils.py`](finetune_classification_utils.py) | Shared utilities, dataset, and base logic used by both backbones |
+| [`finetune_classification_unet.py`](finetune_classification_unet.py) | UNet finetuning and inference script |
+| [`finetune_classification_unet_config.yaml`](finetune_classification_unet_config.yaml) | UNet config — set data paths, checkpoint, and hyperparameters |
+| [`finetune_classification_unet_job.sh`](finetune_classification_unet_job.sh) | UNet SLURM job script |
+| [`finetune_classification_swinunetr.py`](finetune_classification_swinunetr.py) | SwinUNETR finetuning and inference script |
+| [`finetune_classification_swinunetr_config.yaml`](finetune_classification_swinunetr_config.yaml) | SwinUNETR config — set data paths, checkpoint, and hyperparameters |
+| [`finetune_classification_swinunetr_job.sh`](finetune_classification_swinunetr_job.sh) | SwinUNETR SLURM job script |
 
 ---
 
 ## Data Format
 
-Classification patches should be NIfTI files (`.nii.gz`) in a flat directory. The class name is inferred from the filename prefix up to `_patch_`:
+Patches should be NIfTI files (`.nii.gz`) in a flat directory. The class label is inferred automatically from the filename prefix up to `_patch_`:
 
 ```
 train/
-    amyloid_plaque_patch_000_vol000_ch0.nii.gz   -> class: amyloid_plaque
-    amyloid_plaque_patch_001_vol001_ch0.nii.gz   -> class: amyloid_plaque
-    cell_nucleus_patch_002_vol007_ch0.nii.gz     -> class: cell_nucleus
-    vessels_patch_014_vol013_ch0.nii.gz          -> class: vessels
+    amyloid_plaque_patch_000_vol000_ch0.nii.gz   → class: amyloid_plaque
+    amyloid_plaque_patch_001_vol001_ch0.nii.gz   → class: amyloid_plaque
+    cell_nucleus_patch_002_vol007_ch0.nii.gz     → class: cell_nucleus
+    vessels_patch_014_vol013_ch0.nii.gz          → class: vessels
 ```
 
-Label files (ending in `_label.nii.gz`) are automatically skipped, so segmentation and classification patches can share the same directories.
+Label files (ending in `_label.nii.gz`) and blurred files (ending in `_blurred.nii.gz`) are automatically skipped, so classification, segmentation, and deblurring patches can all share the same directories.
 
 ---
 
 ## Quick Start
 
-### Step 1 - Configure Training
+### Step 1 — Configure
 
-Edit the config file for your chosen backbone. The key fields to update are the paths to the data directories, output directory, and pretrained checkpoint.
-
-**For UNet:** edit `finetune_classification_unet_config.yaml`
-
-**For SwinUNETR:** edit `finetune_classification_swinunetr_config.yaml`
+Edit the config for your chosen backbone and update the key fields:
 
 ```yaml
-train_dir: ../../sample_patches/train/
-val_dir: ../../sample_patches/val/
-test_dir: ../../sample_patches/test/
-out_root: ../../output/
-pretrained_ckpt: ../../../01-pretraining/output/pretrained_unet_best.ckpt  # or pretrained_swinunetr_best.ckpt
+train_dir:       ../../sample_patches/train/
+val_dir:         ../../sample_patches/val/
+test_dir:        ../../sample_patches/test/
+out_root:        ../../output/
+pretrained_ckpt: ../../../01-pretraining/output/pretrained_unet_best.ckpt
+                 # or pretrained_swinunetr_best.ckpt
 ```
 
-### Step 2 - Configure the Job Script
+Pretrained checkpoints are available on Zenodo: [https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516). Set `pretrained_ckpt` to your downloaded checkpoint, or set `init: scratch` to train from random initialization.
 
-Edit the job script for your chosen backbone and update the following:
+### Step 2 — Update the job script
 
-**SLURM resource requests** — update to match your cluster:
 ```bash
-#SBATCH --partition=your-gpu-partition
+#SBATCH --partition=your-gpu-partition   # your cluster's GPU partition
+module load anaconda3                    # your cluster's anaconda module
+export WANDB_API_KEY=your_key_here       # or run `wandb login` interactively
 ```
 
-**Conda module** — update to match your cluster's anaconda module:
-```bash
-module load anaconda3        # update version string to match your cluster
-source activate lsm-pretrain
-```
+### Step 3 — Run
 
-**WandB** — set your API key before submitting:
-```bash
-export WANDB_API_KEY=your_key_here
-```
-Or run `wandb login` interactively before submitting the job.
+Submit from this directory:
 
-### Step 3 - Run Finetuning
-
-Submit the job from this directory:
-
-**UNet:**
 ```bash
 cd 02-finetuning/scripts/classification
-sbatch finetune_classification_unet_job.sh
-```
-
-**SwinUNETR:**
-```bash
-cd 02-finetuning/scripts/classification
-sbatch finetune_classification_swinunetr_job.sh
+sbatch finetune_classification_unet_job.sh      # UNet
+sbatch finetune_classification_swinunetr_job.sh # SwinUNETR
 ```
 
 Outputs written to `02-finetuning/output/`:
-- Checkpoints in `output/checkpoints/`
-- Per-patch predictions in `output/preds/preds.csv`
-- Confusion matrix in `output/preds/confusion_matrix.csv`
-- Per-class precision, recall, and F1 in `output/preds/per_class_metrics.csv`
-- Logs in `output/logs/`
-- Training progress and accuracy are logged to WandB
+
+| Output | Location |
+|---|---|
+| Checkpoints | `output/checkpoints/` |
+| Per-patch predictions | `output/preds/preds.csv` |
+| Confusion matrix | `output/preds/confusion_matrix.csv` |
+| Per-class precision, recall, F1 | `output/preds/per_class_metrics.csv` |
+| Logs | `output/logs/` |
+| Training curves + accuracy | WandB |
 
 ---
 
 ## Advanced
 
-### Finetune on Your Own Data
+<details>
+<summary>Finetune on your own data</summary>
 
-Point `train_dir`, `val_dir`, and `test_dir` in the config to your own data directories. If you do not have separate val and test directories, comment out `val_dir` and `test_dir` and the data will be automatically split from `train_dir` using `train_percent` and `val_percent`.
+Point `train_dir`, `val_dir`, and `test_dir` in the config to your own directories. If you don't have separate val and test sets, omit `val_dir` and `test_dir` — the data will be split automatically from `train_dir` using `train_percent` and `val_percent`.
 
-Your patches should be named `<class_name>_patch_<anything>.nii.gz`. The class name is everything before the first `_patch_` in the filename.
+Patches must be named `<class_name>_patch_<anything>.nii.gz`. Everything before the first `_patch_` becomes the class label — no separate label files needed.
 
-### Additional Configuration Options
+</details>
+
+<details>
+<summary>Training hyperparameters</summary>
 
 | Parameter | Description |
 |-----------|-------------|
-| `channel_substr` | Which channel to use from the images (default: ALL) |
-| `train_percent` | Fraction of data to use for training when auto-splitting (default: 0.70) |
-| `val_percent` | Fraction of data to use for validation when auto-splitting (default: 0.15) |
+| `channel_substr` | Channel filter: `ch0`, `ch1`, or `ALL` (default: ALL) |
+| `train_percent` | Fraction of data for training when auto-splitting (default: 0.70) |
+| `val_percent` | Fraction of data for validation when auto-splitting (default: 0.15) |
 | `min_train` | Minimum patches required for training (default: 1) |
 | `min_val` | Minimum patches required for validation (default: 1) |
 | `min_test` | Minimum patches required for test (default: 1) |
 | `lr` | Learning rate (default: 0.0001) |
-| `freeze_encoder_epochs` | Number of epochs to freeze encoder before finetuning it (default: 5) |
-| `linear_probe` | If `true`, freeze encoder for entire training and only train classification head (default: false) |
-| `max_epochs` | Maximum number of training epochs (default: 200) |
-| `early_stopping_patience` | Epochs with no val_accuracy improvement before stopping (default: 50) |
+| `freeze_encoder_epochs` | Epochs to freeze encoder before finetuning it (default: 5) |
+| `linear_probe` | Freeze encoder for entire training — only train classification head (default: false) |
+| `max_epochs` | Maximum training epochs (default: 200) |
+| `early_stopping_patience` | Epochs without val_accuracy improvement before stopping (default: 50) |
 | `class_weighting` | Class imbalance strategy: `none`, `inverse_freq`, or `effective_num` (default: inverse_freq) |
-| `init` | `pretrained` to load from checkpoint, `scratch` to train from random initialization |
+| `init` | `pretrained` or `scratch` (default: pretrained) |
 
-The following architecture-specific parameters must match the values used during pretraining:
+</details>
 
-**UNet** — edit the `unet_*` fields in `finetune_classification_unet_config.yaml`:
+<details>
+<summary>Architecture parameters — must match pretraining</summary>
 
-| Parameter | Description |
-|-----------|-------------|
-| `unet_channels` | Feature channels at each encoder level (default: 32,64,128,256,512) |
-| `unet_strides` | Downsampling strides for each level (default: 2,2,2,1) |
-| `unet_num_res_units` | Number of residual units per level (default: 2) |
-| `unet_norm` | Normalization type: `BATCH`, `INSTANCE`, or `LAYER` (default: BATCH) |
-
-**SwinUNETR** — edit the `swinunetr_feature_size` field in `finetune_classification_swinunetr_config.yaml`:
+**UNet:**
 
 | Parameter | Description |
 |-----------|-------------|
-| `swinunetr_feature_size` | Feature size controlling model capacity (default: 48) |
+| `unet_channels` | Feature channels per encoder level (default: 32,64,128,256,512) |
+| `unet_strides` | Downsampling strides per level (default: 2,2,2,1) |
+| `unet_num_res_units` | Residual units per level (default: 2) |
+| `unet_norm` | Normalization: `BATCH`, `INSTANCE`, or `LAYER` (default: BATCH) |
 
-### Hardware
+**SwinUNETR:**
+
+| Parameter | Description |
+|-----------|-------------|
+| `swinunetr_feature_size` | Model capacity — must match pretraining (default: 48) |
+
+</details>
+
+<details>
+<summary>Hardware settings</summary>
 
 ```bash
 #SBATCH --gres=gpu:1
@@ -153,3 +151,5 @@ The following architecture-specific parameters must match the values used during
 #SBATCH --cpus-per-task=8
 #SBATCH --ntasks-per-node=1
 ```
+
+</details>
