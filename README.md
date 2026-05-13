@@ -10,7 +10,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <!-- Pipeline figure — replace the line below with your methods figure once available -->
-<img src="media/pipeline_overview.drawio.png" width="800" alt="LSM Foundation Model Pipeline">
+<img src="media/pipeline_overview.drawio.png" width="600" alt="LSM Foundation Model Pipeline">
 
 </div>
 
