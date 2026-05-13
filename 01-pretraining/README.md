@@ -1,13 +1,26 @@
 # Light Sheet Microscopy Foundation Model — Pretraining
 
-This directory contains code for pretraining 3D foundation models on light sheet microscopy (LSM) image patches, with support for both image+text and image-only pretraining. Two backbone architectures are supported: UNet and SwinUNETR.
+Pretrain a 3D LSM foundation model on your own data using either a **UNet** or **SwinUNETR** backbone, with **image+text** (CLIP-style) or **image-only** objectives.
+
+> **Don't want to pretrain?** Pretrained checkpoints (UNet and SwinUNETR, image+text and image-only) are available on Zenodo: [https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516). Download a checkpoint and jump straight to [`02-finetuning/`](../02-finetuning/README.md).
 
 ---
 
 ## Contents
 
-- [sample_patches](sample_patches/) - Subfolder for sample NIfTI image files and JSON text prompts.
-- [scripts](scripts/) - Code for pretraining LSM foundation model.
+- [sample_patches](sample_patches/) - Sample NIfTI image files and JSON text prompts.
+- [scripts](scripts/) - Pretraining scripts, configs, and job scripts.
+
+---
+
+## Pretraining Modes
+
+| | Image + text | Image only |
+|---|---|---|
+| **Objective** | CLIP contrastive loss + masked reconstruction + teacher distillation | Masked reconstruction + teacher distillation |
+| **Requires** | BERT model + text prompt JSON files | Nothing extra |
+| **Best for** | Data with known biological labels | General morphology, unlabelled data |
+| **Config field** | `model.use_text: true` | `model.use_text: false` |
 
 ---
 
@@ -19,37 +32,41 @@ This directory contains code for pretraining 3D foundation models on light sheet
 - NVIDIA GPU(s) with CUDA support (tested on H100 96GB)
 - Conda
 
+---
 
-### Pretrained Weights Available
-
-If you do not want to run pretraining yourself, pretrained UNet and SwinUNETR checkpoints (both image+text and image-only) are available for download at [https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516). To use them, skip directly to `02-finetuning/` and follow the finetuning README.
-
-### Step 1 - Clone the Repo
-
-Clone this repo so you have your own working copy.
-
-### Step 2 - Create the Conda Environment
+### Step 1 — Install
 
 ```bash
+git clone https://github.com/AdinaScheinfeld/lsm_fm_public_repo.git
+cd lsm_fm_public_repo
 conda env create -f setup/environment.yaml
 conda activate lsm-pretrain
 ```
 
-This installs all required Python packages including PyTorch, MONAI, PyTorch Lightning, HuggingFace Transformers, and WandB.
+---
 
-### Step 3 - Download the BERT Model (required for image+text mode only)
+### Step 2 — Download BERT *(image+text mode only)*
 
-If you plan to run image+text pretraining, download and save the BERT model locally before training.
+Skip this step if running image-only pretraining (`model.use_text: false`).
 
 ```bash
 python setup/download_bert_model.py
 ```
 
-This saves `bert-base-uncased` to `setup/pretrained_models/bert-base-uncased/`. The config files already point to this location by default.
+This saves `bert-base-uncased` to `setup/pretrained_models/bert-base-uncased/`. The config files already point to this path by default.
 
-### Step 4 - Download Training Data (optional)
+---
 
-The full pretraining dataset is available on Zenodo at [https://doi.org/10.5281/zenodo.20149070](https://doi.org/10.5281/zenodo.20149070). Five dataset archives are provided, each as a `.tar.gz` file:
+### Step 3 — Get training data
+
+**Option A — Use the sample patches** included in the repo. No download needed — the configs already point to `01-pretraining/sample_patches/` by default. Good for a quick smoke test.
+
+**Option B — Download the full datasets** from Zenodo: [https://doi.org/10.5281/zenodo.20149070](https://doi.org/10.5281/zenodo.20149070)
+
+<details>
+<summary>Show dataset details and directory layouts</summary>
+
+Five archives are available, each as a `.tar.gz` file:
 
 | Archive | Source |
 |---|---|
@@ -59,198 +76,191 @@ The full pretraining dataset is available on Zenodo at [https://doi.org/10.5281/
 | `all_allen_developing_mouse_patches.tar.gz` | Allen Developing Mouse Brain patches |
 | `all_allen_connection_projection_patches.tar.gz` | Allen Mouse Brain Connectivity Atlas patches |
 
-Download and extract whichever datasets you want to train on:
-
 ```bash
 tar -xzf all_wu_brain_patches.tar.gz
-tar -xzf all_selma_patches_96.tar.gz
 # repeat for any other archives
 ```
 
-If you only want to train on the sample patches included in the repo, skip this step.
+Once extracted, each dataset has the following structure — the data loading code handles these automatically, no code changes needed:
 
-### Step 5 - Configure Training
-
-Edit the config file for your chosen backbone to match your setup.
-
-**For UNet:** edit `01-pretraining/scripts/pretrain_unet_config.yaml`
-
-**For SwinUNETR:** edit `01-pretraining/scripts/pretrain_swinunetr_config.yaml`
-
-**Data paths** — point each source to the directory where you extracted the downloaded data, and set each source to `True` or `False` to enable or disable it:
-
-```yaml
-data:
-  roots:
-    connection: /path/to/all_allen_connection_projection_patches
-    dev_mouse: /path/to/all_allen_developing_mouse_patches
-    human2: /path/to/all_allen_human2_patches
-    selma: /path/to/all_selma_patches_96
-    wu: /path/to/all_wu_brain_patches
-
-  enable:
-    connection: True
-    dev_mouse: True
-    human2: True
-    selma: True
-    wu: True
-```
-
-**Training mode** — set `use_text: true` for image+text pretraining, `false` for image-only:
-```yaml
-model:
-  use_text: true
-```
-
-### Step 6 - Configure the Job Script
-
-Edit the job script for your chosen backbone and update the following:
-
-**For UNet:** edit `01-pretraining/scripts/pretrain_unet_job.sh`
-
-**For SwinUNETR:** edit `01-pretraining/scripts/pretrain_swinunetr_job.sh`
-
-**SLURM resource requests** — update to match your cluster:
-```bash
-#SBATCH --partition=your-gpu-partition   # your cluster's GPU partition name
-```
-
-**Conda module** — update to match your cluster's anaconda module:
-```bash
-module load anaconda3        # update version string to match your cluster
-source activate lsm-pretrain
-```
-
-**WandB** — set your API key before submitting:
-```bash
-export WANDB_API_KEY=your_key_here
-```
-Or run `wandb login` interactively before submitting the job.
-
-### Step 7 - Run Pretraining
-
-Submit the job for your chosen backbone:
-
-**UNet:**
-```bash
-cd 01-pretraining/scripts
-sbatch pretrain_unet_job.sh
-```
-
-**SwinUNETR:**
-```bash
-cd 01-pretraining/scripts
-sbatch pretrain_swinunetr_job.sh
-```
-
-This will pretrain the backbone using the sample patches and text descriptions provided in `01-pretraining/sample_patches/`. Checkpoints and logs will be written to `01-pretraining/output/`. Training progress, losses, and reconstructed image samples are logged to WandB.
-
----
-
-## Advanced
-
-### Using the Full Training Datasets
-
-The full pretraining datasets are available on Zenodo at [https://doi.org/10.5281/zenodo.20149070](https://doi.org/10.5281/zenodo.20149070) — see [Step 4](#step-4---download-training-data-optional) for download instructions. Once extracted, each dataset has the following directory structure, which the data loading code expects automatically:
-
-| Source | Config key | Expected layout | Text prompt file |
-|--------|------------|----------------|-----------------|
+| Source | Config key | Directory layout | Text prompt file |
+|--------|------------|-----------------|-----------------|
 | Allen Connection Projection | `connection` | `<root>/<run>/c0\|c1\|c2/*.nii.gz` | `text_prompts_allen_connection.json` |
 | Allen Developing Mouse | `dev_mouse` | `<root>/*.nii.gz` (flat) | `text_prompts_allen_dev_mouse.json` |
 | Allen Human2 | `human2` | `<root>/<subject>/*.nii.gz` | `text_prompts_allen_human2.json` |
 | Selma | `selma` | `<root>/<class>/*.nii.gz` | `text_prompts_selma.json` |
 | Wu Brain | `wu` | `<root>/<volume>/input/*.nii.gz` | `text_prompts_wu.json` |
 
-No code changes are needed — just point each `roots` entry in the config to the extracted directory and set the corresponding `enable` flag to `True`.
+</details>
 
 ---
 
-### Additional Configuration Options
+### Step 4 — Configure
 
-The following parameters can be edited in the config file for your chosen backbone:
+Edit the config for your chosen backbone:
 
-| Parameter | Location | Description |
-|-----------|----------|-------------|
-| `max_epochs` | `training` | Total number of epochs to train for |
-| `patience` | `training` | Use for early stopping (set to a high value to effectively disable) |
-| `downsample.enabled` | `downsample` | If `true`, downsamples $96^3$ patches to `target_size`$^3$ before training |
-| `global_batch_size` | `data` | Total batch size (automatically divided across GPUs) (default: 16) |
-| `mask_ratio_warmup` | `model` | Mask ratio used during warmup epochs (default: 0.05) |
+| Backbone | Config file | Job script |
+|---|---|---|
+| UNet | `scripts/pretrain_unet_config.yaml` | `scripts/pretrain_unet_job.sh` |
+| SwinUNETR | `scripts/pretrain_swinunetr_config.yaml` | `scripts/pretrain_swinunetr_job.sh` |
+
+**If using the full datasets**, update the `roots` paths and `enable` flags:
+
+```yaml
+data:
+  roots:
+    connection: /path/to/all_allen_connection_projection_patches
+    dev_mouse:  /path/to/all_allen_developing_mouse_patches
+    human2:     /path/to/all_allen_human2_patches
+    selma:      /path/to/all_selma_patches_96
+    wu:         /path/to/all_wu_brain_patches
+  enable:
+    connection: true
+    dev_mouse:  true
+    human2:     true
+    selma:      true
+    wu:         true
+```
+
+**Set the pretraining mode:**
+
+```yaml
+model:
+  use_text: true   # image+text | set to false for image-only
+```
+
+**Update the job script** to match your cluster:
+
+```bash
+#SBATCH --partition=your-gpu-partition   # GPU partition name
+module load anaconda3                    # update to your cluster's module name
+export WANDB_API_KEY=your_key_here       # or run `wandb login` interactively
+```
+
+---
+
+### Step 5 — Run
+
+Submit from the `scripts/` directory:
+
+```bash
+cd 01-pretraining/scripts
+
+# UNet
+sbatch pretrain_unet_job.sh
+
+# SwinUNETR
+sbatch pretrain_swinunetr_job.sh
+```
+
+Outputs are written to `01-pretraining/output/`:
+- Best and last checkpoints in `output/`
+- Periodic checkpoints in `output/periodic_checkpoints/`
+- Logs in `output/logs/`
+- Training progress, losses, and reconstructed image samples logged to WandB
+
+---
+
+## Resuming Training
+
+```bash
+# Resume from the last checkpoint automatically
+sbatch pretrain_unet_job.sh --resume
+
+# Resume from a specific checkpoint
+srun python pretrain_unet.py --config pretrain_unet_config.yaml --ckpt_path /path/to/checkpoint.ckpt
+```
+
+The same flags work for the SwinUNETR scripts.
+
+---
+
+## Advanced Configuration
+
+<details>
+<summary>Training hyperparameters</summary>
+
+| Parameter | Config section | Description |
+|-----------|---------------|-------------|
+| `max_epochs` | `training` | Total training epochs |
+| `patience` | `training` | Early stopping patience (set high to disable) |
+| `global_batch_size` | `data` | Total batch size across all GPUs (default: 16) |
+| `mask_ratio` | `model` | Fraction of voxels masked per patch (default: 0.3) |
+| `mask_ratio_warmup` | `model` | Mask ratio during warmup epochs (default: 0.05) |
 | `warmup_epochs` | `model` | Number of warmup epochs |
-| `mask_ratio` | `model` | Fraction of voxels masked during training (default: 0.3) |
 | `lr` | `model` | Learning rate (default: 0.0001) |
-| `mask_patch_size` | `model` | Base mask size (default: 8) |
-| `save_dirpath` | `model` | Directory in which to save model checkpoints and logs |
-| `distill_weight` | `loss_weights` | Weight for student-teacher KL divergence loss |
-| `reconstruction_weight` | `loss_weights` | Weight for masked voxel L1 reconstruction loss |
-| `align_weight` | `loss_weights` | Weight for per-pair image-text cosine alignment loss |
-| `clip_weight` | `loss_weights` | Weight for contrastive image-text CLIP loss |
+| `mask_patch_size` | `model` | Base mask patch size (default: 8) |
+| `save_dirpath` | `model` | Directory to save checkpoints |
+| `downsample.enabled` | `data` | Downsample 96³ patches to `target_size`³ before training |
 
-The following architecture-specific parameters can also be configured:
+</details>
 
-**UNet** — edit the `unet:` block in `pretrain_config_unet.yaml`:
+<details>
+<summary>Loss weights</summary>
 
 | Parameter | Description |
 |-----------|-------------|
-| `channels` | Number of feature channels at each encoder level (default: [32, 64, 128, 256, 512]) |
-| `strides` | Downsampling strides for each level (default: [2, 2, 2, 1]) |
-| `num_res_units` | Number of residual units per level (default: 2) |
-| `norm` | Normalization type: `BATCH`, `INSTANCE`, or `LAYER` (default: BATCH) |
+| `distill_weight` | Student-teacher KL divergence loss (default: 0.50) |
+| `reconstruction_weight` | Masked voxel L1 reconstruction loss (default: 0.30) |
+| `align_weight` | Per-pair image-text cosine alignment loss (default: 0.05) |
+| `clip_weight` | Contrastive image-text CLIP loss (default: 0.30) |
 
-**SwinUNETR** — edit the `swinunetr:` block in `pretrain_swinunetr_config.yaml`:
+`align_weight` and `clip_weight` are ignored when `use_text: false`.
+
+</details>
+
+<details>
+<summary>Architecture parameters</summary>
+
+These must match between pretraining and finetuning configs.
+
+**UNet** — `unet:` block in `pretrain_unet_config.yaml`:
 
 | Parameter | Description |
 |-----------|-------------|
-| `feature_size` | Controls model capacity; larger values increase parameters (default: 48) |
-| `use_checkpoint` | Enable gradient checkpointing to reduce memory usage (default: true) |
+| `channels` | Feature channels per encoder level (default: [32, 64, 128, 256, 512]) |
+| `strides` | Downsampling strides per level (default: [2, 2, 2, 1]) |
+| `num_res_units` | Residual units per level (default: 2) |
+| `norm` | Normalization: `BATCH`, `INSTANCE`, or `LAYER` (default: BATCH) |
 
----
+**SwinUNETR** — `swinunetr:` block in `pretrain_swinunetr_config.yaml`:
 
-### Hardware
+| Parameter | Description |
+|-----------|-------------|
+| `feature_size` | Model capacity — larger = more parameters (default: 48) |
+| `use_checkpoint` | Gradient checkpointing to reduce memory (default: true) |
 
-You may also need to update the GPU configurations to match your available hardware:
+</details>
+
+<details>
+<summary>Multi-GPU and hardware settings</summary>
+
+Update both the config file and job script to match your hardware:
 
 ```yaml
 # config file
-
 dist:
-  devices: 2          # number of GPUs per node
-  num_nodes: 1        # number of nodes
-  accumulate_grad_batches: 8
+  devices: 2                 # GPUs per node
+  num_nodes: 1               # number of nodes
+  accumulate_grad_batches: 8 # effective batch size multiplier
 ```
 
 ```bash
 # job script
-
-#SBATCH --gres=gpu:2              # GPU count
+#SBATCH --gres=gpu:2
 #SBATCH --mem=180G
 #SBATCH --cpus-per-task=16
-#SBATCH --ntasks-per-node=2       # must match number of GPUs
+#SBATCH --ntasks-per-node=2  # must equal number of GPUs
 ```
 
----
-
-### Resuming Training
-
-To resume training from the last checkpoint:
-```bash
-sbatch pretrain_unet_job.sh --resume
-```
-
-To resume from a specific checkpoint:
-```bash
-srun python pretrain_unet.py --config pretrain_config_unet.yaml --ckpt_path /path/to/checkpoint.ckpt
-```
-
-The same `--resume` and `--ckpt_path` flags are available for the SwinUNETR scripts.
+</details>
 
 ---
 
 ## Notes
 
-- Patch files must be in NIfTI format (`.nii.gz`), 3D, single-channel
-- All patches should be the same spatial size (default: 96×96×96 voxels)
-- The model uses instance normalization and is robust to different intensity ranges — intensity is normalized to [0, 1] via percentile scaling during loading
-- With `use_text: false`, BERT is never loaded and CLIP/alignment losses are zero — the model trains purely on masked image reconstruction and teacher distillation
-- Prompt JSON files for disabled sources do not need to exist — missing files are skipped automatically
-- `unet_strides` in the UNet config must match between pretraining and finetuning configs — if you change the default strides during pretraining, use the same values when finetuning
+- Patch files must be in NIfTI format (`.nii.gz`), 3D, single-channel, default 96×96×96 voxels
+- Intensity is normalized to [0, 1] via percentile scaling — the model is robust to different intensity ranges
+- With `use_text: false`, BERT is never loaded and CLIP/alignment losses are disabled automatically
+- Prompt JSON files for disabled sources do not need to exist — missing files are skipped
+- `unet_strides` and `unet_norm` must match between pretraining and finetuning configs
