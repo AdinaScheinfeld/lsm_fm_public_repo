@@ -8,7 +8,7 @@ A small set of sample patches is included here so you can run a pretraining smok
 
 ## Example Patches
 
-<img src="../../media/pretraining_github_fig.png" width="700" alt="Sample LSM patches">
+<img src="../../media/pretraining_github_fig.png" width="800" alt="Sample LSM patches">
 
 ---
 
