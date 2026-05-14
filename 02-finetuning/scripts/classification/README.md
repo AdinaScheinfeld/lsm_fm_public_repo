@@ -2,7 +2,9 @@
 
 Finetune a pretrained LSM foundation model for **multiclass patch classification** of 3D light sheet microscopy patches.
 
-<img src="../../../media/classification_fig.png" width="700" alt="Classification results">
+<div align="center">
+    <img src="../../../media/classification_fig.png" width="700" alt="Classification results">
+</div>
 
 | | UNet | SwinUNETR |
 |---|---|---|
