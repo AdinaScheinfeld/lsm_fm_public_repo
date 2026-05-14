@@ -2,9 +2,7 @@
 
 Finetune a pretrained LSM foundation model for **binary segmentation** of 3D light sheet microscopy patches.
 
-<div align="center">
-    <img src="../../../media/segmentation_fig.png" width="600" alt="Segmentation results">
-</div>
+<img src="../../../media/segmentation_fig.png" width="700" alt="Segmentation results">
 
 | | UNet | SwinUNETR |
 |---|---|---|
@@ -124,6 +122,8 @@ Label masks must be named `<image_stem>_label.nii.gz` and placed in the same dir
 
 <details>
 <summary>Architecture parameters — must match pretraining</summary>
+
+> **Using the provided UNet checkpoints?** Both the image+text and image-only UNet models were pretrained with the following architecture. These values are already set as defaults in the config file — only change them if you are using a custom pretrained checkpoint.
 
 **UNet:**
 

@@ -2,9 +2,7 @@
 
 Finetune a pretrained LSM foundation model for **multiclass patch classification** of 3D light sheet microscopy patches.
 
-<div align="center">
-    <img src="../../../media/classification_fig.png" width="700" alt="Classification results">
-</div>
+<img src="../../../media/classification_fig.png" width="700" alt="Classification results">
 
 | | UNet | SwinUNETR |
 |---|---|---|
@@ -126,6 +124,8 @@ Patches must be named `<class_name>_patch_<anything>.nii.gz`. Everything before 
 
 <details>
 <summary>Architecture parameters — must match pretraining</summary>
+
+> **Using the provided UNet checkpoints?** Both the image+text and image-only UNet models were pretrained with the following architecture. These values are already set as defaults in the config file — only change them if you are using a custom pretrained checkpoint.
 
 **UNet:**
 

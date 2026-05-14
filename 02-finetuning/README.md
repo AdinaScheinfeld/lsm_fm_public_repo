@@ -74,3 +74,12 @@ Each task has its own config, job script, and README with full instructions:
 - Patch files must be in NIfTI format (`.nii.gz`), 3D, single-channel, default 96×96×96 voxels
 - Intensity is normalized to [0, 1] during loading — the model is robust to different intensity ranges
 - Architecture parameters (`unet_strides`, `unet_norm`, `swinunetr_feature_size`, etc.) must match between pretraining and finetuning configs — mismatches will cause weights to fail to load
+
+> **Using the provided UNet checkpoints?** Both the image+text and image-only UNet models were pretrained with the following architecture — use these exact values in your finetuning config:
+> ```yaml
+> unet_channels: "32,64,128,256,512"
+> unet_strides: "2,2,2,1"
+> unet_num_res_units: 2
+> unet_norm: BATCH
+> ```
+> These are already set as defaults in the provided config files.

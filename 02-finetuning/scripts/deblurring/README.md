@@ -2,9 +2,7 @@
 
 Finetune a pretrained LSM foundation model for **3D image deblurring** of light sheet microscopy patches.
 
-<div align="center">
-    <img src="../../../media/deblurring_fig.png" width="400" alt="Deblurring results">
-</div>
+<img src="../../../media/deblurring_fig.png" width="700" alt="Deblurring results">
 
 | | UNet | SwinUNETR |
 |---|---|---|
@@ -127,6 +125,8 @@ Each sharp patch must have a corresponding blurred file named `<stem>_blurred.ni
 
 <details>
 <summary>Architecture parameters — must match pretraining</summary>
+
+> **Using the provided UNet checkpoints?** Both the image+text and image-only UNet models were pretrained with the following architecture. These values are already set as defaults in the config file — only change them if you are using a custom pretrained checkpoint.
 
 **UNet:**
 
