@@ -2,7 +2,7 @@
 
 A small set of sample patches is included here so you can run a finetuning smoke test out of the box — no data download required. The configs point to these directories by default.
 
-<img src="../../media/finetuning_github_fig.png" width="500" alt="Sample finetuning patches">
+<img src="../../media/finetuning_github_fig.png" width="600" alt="Sample finetuning patches">
 
 ---
 
