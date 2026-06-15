@@ -48,14 +48,14 @@ Pretrained checkpoints for all four model variants are available on Zenodo:
 
 **[https://doi.org/10.5281/zenodo.20146516](https://doi.org/10.5281/zenodo.20146516)**
 
-| Checkpoint | Backbone | Mode |
-|---|---|---|
-| `pretrained_unet_image_text.ckpt` | UNet | Image + text |
-| `pretrained_unet_image_only.ckpt` | UNet | Image only |
-| `pretrained_swinunetr_image_text.ckpt` | SwinUNETR | Image + text |
-| `pretrained_swinunetr_image_only.ckpt` | SwinUNETR | Image only |
+| Checkpoint | Backbone | Mode | Architecture setting |
+|---|---|---|---|
+| `unet_image_text_best.ckpt` | UNet | Image + text | `unet_channels: [32,64,128,256,512]` |
+| `unet_image_only_best.ckpt` | UNet | Image only | `unet_channels: [32,64,128,256,512]` |
+| `swinunetr_image_text_best.ckpt` | SwinUNETR | Image + text | `swinunetr_feature_size: 36` |
+| `swinunetr_image_only_best.ckpt` | SwinUNETR | Image only | `swinunetr_feature_size: 24` |
 
-Download the checkpoint for your chosen backbone and note the path — you will set `pretrained_ckpt` in the config to point to it. To finetune from random initialization instead, set `init: scratch` in the config.
+Download the checkpoint for your chosen backbone and note the path — you will set `pretrained_ckpt` in the config to point to it. Make sure the "Architecture setting" matches the config for your chosen checkpoint (see each task's README for details). To finetune from random initialization instead, set `init: scratch` in the config.
 
 ---
 

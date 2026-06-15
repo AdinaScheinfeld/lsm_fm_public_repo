@@ -140,9 +140,16 @@ Each sharp patch must have a corresponding blurred file named `<stem>_blurred.ni
 
 **SwinUNETR:**
 
+> **Using the provided SwinUNETR checkpoints?** The image+text and image-only SwinUNETR models were pretrained with different `feature_size` values — set this to match the checkpoint you're using:
+
+| Checkpoint | `swinunetr_feature_size` |
+|---|---|
+| `swinunetr_image_text_best.ckpt` | 36 |
+| `swinunetr_image_only_best.ckpt` | 24 |
+
 | Parameter | Description |
 |-----------|-------------|
-| `swinunetr_feature_size` | Model capacity — must match pretraining (default: 48) |
+| `swinunetr_feature_size` | Model capacity — must match the pretraining checkpoint (see table above) |
 
 </details>
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=finetune_unet
-#SBATCH --output=/home/ads4015/lsm_fm_public_repo/02-finetuning/output/logs/finetune_unet_%j.out
-#SBATCH --error=/home/ads4015/lsm_fm_public_repo/02-finetuning/output/logs/finetune_unet_%j.err
+#SBATCH --output=../../output/logs/finetune_unet_%j.out
+#SBATCH --error=../../output/logs/finetune_unet_%j.err
 #SBATCH --time=3-00:00:00
 #SBATCH --partition=gpu   # <-- update to your cluster's GPU partition name
 #SBATCH --gres=gpu:1

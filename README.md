@@ -46,12 +46,14 @@ conda activate lsm-pretrain
 
 Four pretrained checkpoints are available — choose the backbone and pretraining mode that fits your use case:
 
-| Checkpoint | Backbone | Pretraining mode | Best for |
-|---|---|---|---|
-| `pretrained_unet_image_text.ckpt` | UNet | Image + text | Labeled biological structures |
-| `pretrained_unet_image_only.ckpt` | UNet | Image only | General morphology |
-| `pretrained_swinunetr_image_text.ckpt` | SwinUNETR | Image + text | Labeled biological structures |
-| `pretrained_swinunetr_image_only.ckpt` | SwinUNETR | Image only | General morphology |
+| Checkpoint | Backbone | Pretraining mode | Best for | Architecture setting |
+|---|---|---|---|---|
+| `unet_image_text_best.ckpt` | UNet | Image + text | Labeled biological structures | `unet_channels: [32,64,128,256,512]` |
+| `unet_image_only_best.ckpt` | UNet | Image only | General morphology | `unet_channels: [32,64,128,256,512]` |
+| `swinunetr_image_text_best.ckpt` | SwinUNETR | Image + text | Labeled biological structures | `swinunetr_feature_size: 36` |
+| `swinunetr_image_only_best.ckpt` | SwinUNETR | Image only | General morphology | `swinunetr_feature_size: 24` |
+
+> The "Architecture setting" column must match the corresponding parameter in the finetuning config for the checkpoint you choose — see [Finetuning](#finetuning).
 
 ---
 
