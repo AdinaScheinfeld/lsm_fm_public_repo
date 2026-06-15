@@ -96,7 +96,7 @@ infer_ckpt: best
 swinunetr_img_size: 96
 
 # feature size (must match the feature_size used during pretraining)
-swinunetr_feature_size: 48
+swinunetr_feature_size: 36
 
 # -------------------------
 # Logging
