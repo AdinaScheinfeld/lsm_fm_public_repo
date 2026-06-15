@@ -88,7 +88,7 @@ highfreq_weight: 0.1
 # must match the architecture used during pretraining
 
 # feature size (must match the feature_size used during pretraining)
-swinunetr_feature_size: 48
+swinunetr_feature_size: 36
 
 # -------------------------
 # Logging
