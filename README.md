@@ -4,7 +4,7 @@
 
 **Pretrain and finetune 3D foundation models for light sheet microscopy image analysis**
 
-[![arXiv](https://img.shields.io/badge/arXiv-coming%20soon-b31b1b?logo=arxiv)](https://arxiv.org)
+[![arXiv](https://img.shields.io/badge/arXiv-2605.26026-b31b1b?logo=arxiv)](https://arxiv.org/abs/2605.26026)
 [![Pretrained Weights](https://img.shields.io/badge/Zenodo-Pretrained%20Weights-blue?logo=zenodo)](https://doi.org/10.5281/zenodo.20146516)
 [![Training Data](https://img.shields.io/badge/Zenodo-Training%20Data-blue?logo=zenodo)](https://doi.org/10.5281/zenodo.20149070)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -120,15 +120,15 @@ lsm_fm_public_repo/
 
 ## Citation
 
-If you use this code or the pretrained models in your work, please cite our paper. The arXiv preprint is coming soon — this section will be updated with the full citation when it is available.
+If you use this code or the pretrained models in your work, please cite our paper:
 
 ```bibtex
 @article{scheinfeld2026lsm,
-  title   = {coming soon},
-  author  = {coming soon},
-  journal = {arXiv},
+  title   = {A Multimodal 3D Foundation Model for Light Sheet Fluorescence Microscopy Enables Few-Shot Segmentation, Classification, and Deblurring},
+  author  = {Scheinfeld, Adina and Zhang, Haotan and Mu, Shang and van Herten, Rudolf L. M. and Stoffl, Lucas and Erturk, Ali and Wu, Zhuhao and Paetzold, Johannes C.},
+  journal = {arXiv preprint arXiv:2605.26026},
   year    = {2026},
-  url     = {coming soon}
+  url     = {https://arxiv.org/abs/2605.26026}
 }
 ```
 
