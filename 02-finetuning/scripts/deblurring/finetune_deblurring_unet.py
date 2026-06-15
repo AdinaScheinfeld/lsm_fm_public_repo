@@ -34,18 +34,18 @@ from finetune_deblurring_utils import (
 # -------------------------
 
 # function to load UNet encoder weights from a pretraining checkpoint
-# pretraining checkpoints store weights as student_encoder.<rest>
-# we map to model.<rest> to match the UNet model structure
+# pretraining checkpoints store weights as student_encoder.model.<rest>;
+# strip the student_encoder. prefix so keys line up with the UNet's own model.<rest>
 def _load_unet_backbone(unet: Unet, ckpt_path: str):
     print(f"[INFO] Loading pretrained UNet checkpoint: {ckpt_path}", flush=True)
     ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     sd = ckpt.get("state_dict", ckpt)
 
-    # map student_encoder.<rest> -> model.<rest>
+    # strip student_encoder. -> model.<rest>
     mapped = {}
     for k, v in sd.items():
         if k.startswith("student_encoder."):
-            mapped["model." + k[len("student_encoder."):]] = v
+            mapped[k[len("student_encoder."):]] = v
 
     model_sd = unet.state_dict()
     safe, dropped = {}, []
